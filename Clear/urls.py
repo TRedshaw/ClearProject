@@ -20,4 +20,6 @@ from . import views
 urlpatterns = [
     path('inhaler', views.inhaler, name='clear-inhaler'),
     path('pollution', views.pollution, name='clear-pollution'),
+    path('settings', views.settings, name='clear-settings'),
+
 ]
