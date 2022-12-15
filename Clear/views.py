@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
 
 def inhaler(request):
     # Renders the page 'inhaler.html' from the clear file in templates
