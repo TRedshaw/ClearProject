@@ -18,7 +18,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.welcome, name='clear-welcome'),
+    path('welcome', views.welcome, name='clear-welcome'),
     path('inhaler', views.inhaler, name='clear-inhaler'),
     path('pollution', views.pollution, name='clear-pollution'),
     path('settings', views.settings, name='clear-settings'),
