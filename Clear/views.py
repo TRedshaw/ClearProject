@@ -1,8 +1,5 @@
 from django.shortcuts import render
 
-def welcome(request):
-    return render(request, 'clear/welcome.html')
-
 def inhaler(request):
     # Renders the page 'inhaler.html' from the clear file in templates
     # Request is always the first bit
