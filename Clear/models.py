@@ -1,26 +1,25 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 import datetime
 
 
-class UserProfile(models.Model):
+class AppUser(AbstractUser):
     # CASCADE ensures that if a user is deleted, it deletes all things related to it
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     dob = models.DateField(default=datetime.date.today)
+    # PROTECTs the deletion of a UserProfile if a Location is tried to be deleted
     current_location = models.ForeignKey('Location', on_delete=models.PROTECT, related_name='current_users', null=True)
-
-    # PROTECT protects the deletion of a UserProfile if a Location is attempted to be deleted, an error message is thrown
     pollution_limit = models.IntegerField()
     consent = models.BooleanField()
 
+    REQUIRED_FIELDS = ['dob', 'pollution_limit', 'consent']
+
     class Meta:
-        verbose_name = 'User Profile'
-        verbose_name_plural = 'User Profiles'
-        ordering=['id']
+        verbose_name = 'App User'
+        verbose_name_plural = 'App Users'
+        ordering = ['id']
 
     def __str__(self):
-        return self.user.username
+        return self.username
 
     def set_new_current_location(self):
         # TODO set it so when the user enters their current location, it updates the current location field
@@ -57,14 +56,14 @@ class UserLocations(models.Model):
         ('other', 'Other')
     ]
 
-    user_id = models.ForeignKey('UserProfile', on_delete=models.CASCADE, related_name='locations_user', null=False)
+    user_id = models.ForeignKey('AppUser', on_delete=models.CASCADE, related_name='locations_user', null=False)
     location_id = models.ForeignKey('Location', on_delete=models.PROTECT, related_name='users_location', null=True)
     location_type = models.CharField(max_length=5, choices=LOCATION_TYPES)
 
     class Meta:
         verbose_name = 'User Location'
         verbose_name_plural = 'User Locations'
-        ordering=['id']
+        ordering = ['id']
 
     def __str__(self):
         return_string = str(self.user_id) + "@" + str(self.location_type)
@@ -78,7 +77,7 @@ class Location(models.Model):
     class Meta:
         verbose_name = 'Location'
         verbose_name_plural = 'Locations'
-        ordering=['postcode']
+        ordering = ['postcode']
 
     def __str__(self):
         return self.name
@@ -103,7 +102,7 @@ class Inhaler(models.Model):
     class Meta:
         verbose_name = 'Inhaler'
         verbose_name_plural = 'Inhalers'
-        ordering=['id']
+        ordering = ['id']
 
     def __str__(self):
         return self.name
@@ -113,7 +112,7 @@ class UserInhaler(models.Model):
     # models.PROTECT works so if a user tries to delete an 'Inhaler' record (the one in quotations) then it wont let you
     # models.CASCADE will delete all related UserInhalers if a UserProfile (user) is deleted
 
-    user_id = models.ForeignKey('UserProfile', on_delete=models.CASCADE, related_name='inhalers_user', null=False)
+    user_id = models.ForeignKey('AppUser', on_delete=models.CASCADE, related_name='inhalers_user', null=False)
     inhaler_id = models.ForeignKey('Inhaler', on_delete=models.PROTECT, related_name='users_inhaler', null=False)
     puffs_today = models.IntegerField(default=0)
     puffs_remaining = models.IntegerField(null=False)
@@ -125,7 +124,7 @@ class UserInhaler(models.Model):
     class Meta:
         verbose_name = 'User Inhaler'
         verbose_name_plural = 'Users Inhalers'
-        ordering=['id']
+        ordering = ['id']
 
     def __str__(self):
         return_string = str(self.user_id) + " with " + str(self.inhaler_id)
@@ -154,7 +153,7 @@ class PollutionLevelInfo(models.Model):
     class Meta:
         verbose_name = 'Pollution Level Info'
         verbose_name_plural = 'Pollution Level Info'
-        ordering=['id']
+        ordering = ['id']
 
     def __str__(self):
         return self.band
@@ -172,7 +171,7 @@ class PollutionLevels(models.Model):
     class Meta:
         verbose_name = 'Pollution Levels'
         verbose_name_plural = 'Pollution Levels'
-        ordering=['location_id']
+        ordering = ['location_id']
 
     def __str__(self):
         return_string = "Level " + str(self.pollution_level) + "@" + str(self.location_id)
