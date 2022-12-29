@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime
@@ -5,6 +6,7 @@ import datetime
 
 class AppUser(AbstractUser):
     # CASCADE ensures that if a user is deleted, it deletes all things related to it
+    # dob in form YYYY-MM-DD
     dob = models.DateField(default=datetime.date.today)
     # PROTECTs the deletion of a UserProfile if a Location is tried to be deleted
     current_location = models.ForeignKey('Location', on_delete=models.PROTECT, related_name='current_users', null=True)
@@ -56,7 +58,7 @@ class UserLocations(models.Model):
         ('other', 'Other')
     ]
 
-    user_id = models.ForeignKey('AppUser', on_delete=models.CASCADE, related_name='locations_user', null=False)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='locations_user', null=False)
     location_id = models.ForeignKey('Location', on_delete=models.PROTECT, related_name='users_location', null=True)
     location_type = models.CharField(max_length=5, choices=LOCATION_TYPES)
 
@@ -112,7 +114,7 @@ class UserInhaler(models.Model):
     # models.PROTECT works so if a user tries to delete an 'Inhaler' record (the one in quotations) then it wont let you
     # models.CASCADE will delete all related UserInhalers if a UserProfile (user) is deleted
 
-    user_id = models.ForeignKey('AppUser', on_delete=models.CASCADE, related_name='inhalers_user', null=False)
+    user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inhalers_user', null=False)
     inhaler_id = models.ForeignKey('Inhaler', on_delete=models.PROTECT, related_name='users_inhaler', null=False)
     puffs_today = models.IntegerField(default=0)
     puffs_remaining = models.IntegerField(null=False)
