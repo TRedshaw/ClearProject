@@ -160,6 +160,7 @@ class PollutionLevelInfo(models.Model):
 
 
 class PollutionLevels(models.Model):
+    # TODO will need to edit at a later date to accomodate for different pollutants
     location_id = models.ForeignKey('Location', on_delete=models.CASCADE, related_name='location_pollution', null=False)
     pollution_level = models.IntegerField()
     pollution_date = models.DateField(default=datetime.date.today)
