@@ -34,7 +34,7 @@
     <title>C L E A R</title>
     <nav class="navbar navbar-expand-md navbar-light menu-background">
         <div class="container">
-            <a class="navbar-brand" href="/clear/inhaler">
+            <a class="navbar-brand" href="{% url 'inhalers' %}">
 
 {#              TODO Fix this image showing -- we need to setup a static file directory and allow it to p-roperly access images from                    anywhere on the internet#}
 
@@ -48,15 +48,20 @@
                 <ul class="navbar-nav ml-auto">
 
                   <li class="nav-item active">
-                    <a class="nav-link display-6" href="{% url 'clear-inhaler' %}">Inhaler Log <span class="sr-only">(current)</span></a>
+                    <a class="nav-link display-6" href="{% url 'inhalers' %}">Inhaler Log <span class="sr-only">(current)</span></a>
                   </li>
 
                   <li class="nav-item">
-                    <a class="nav-link display-6" href="{% url 'clear-pollution' %}">Pollution Map</a>
+                    <a class="nav-link display-6" href="{% url 'pollution' %}">Pollution Map</a>
                   </li>
 
                   <li class="nav-item">
-                    <a class="nav-link display-6" href="{% url 'clear-settings' %}">Settings</a>
+                    <a class="nav-link display-6" href="{% url 'settings' %}">Settings</a>
+                  </li>
+
+{#                    TODO Button colour lgoout#}
+                    <li class="nav-item">
+                    <a class="nav-link display-6" href="{% url 'logout' %}">Logout</a>
                   </li>
 
                 </ul>

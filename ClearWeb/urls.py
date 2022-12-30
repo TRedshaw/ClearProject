@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('clear/', include('Clear.urls')),
+    # Standard Django auth routes to use for login/logout
+    path('clear/', include("django.contrib.auth.urls")),
     path('admin/', admin.site.urls),
 ]
