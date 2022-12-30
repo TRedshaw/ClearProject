@@ -23,6 +23,7 @@ class AppUser(AbstractUser):
     def __str__(self):
         return self.username
 
+    # TODO @Kareena + Cassy - Current location code in the 2 below functions
     def set_new_current_location(self):
         # TODO set it so when the user enters their current location, it updates the current location field
         pass
@@ -34,6 +35,7 @@ class AppUser(AbstractUser):
         # eg. if work clicked, then take the work location id from the userLocations table and insert into the current
         # location field in this table (for example)
         pass
+
 
     def add_location(self):
         # TODO Create code to add a location
@@ -73,6 +75,10 @@ class UserLocations(models.Model):
 
 
 class Location(models.Model):
+    """
+    A model which contains all location names and their related postcodes. Will be used to associate
+    location name with ID.
+    """
     postcode = models.CharField(max_length=12)
     name = models.CharField(max_length=128)
 
