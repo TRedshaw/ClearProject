@@ -18,8 +18,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('inhaler', views.inhaler, name='clear-inhaler'),
-    path('pollution', views.pollution, name='clear-pollution'),
-    path('settings', views.settings, name='clear-settings'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('inhalers/', views.InhalerView.as_view(), name='inhalers'),
+    path('pollution/', views.PollutionView.as_view(), name='pollution'),
+    path('settings/', views.SettingsView.as_view(), name='settings')
 
+    # TODO Everyone add their views like above
+    # https://docs.djangoproject.com/en/4.1/topics/class-based-views/intro/
 ]

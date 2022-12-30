@@ -29,6 +29,10 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'Clear.AppUser'
 
+# Login and logout redirect URLs
+LOGIN_REDIRECT_URL = "inhalers"
+LOGOUT_REDIRECT_URL = "login"
+
 
 # Application definition
 
@@ -58,7 +62,11 @@ ROOT_URLCONF = 'ClearWeb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+
+        # Sets the template base directory
+        "DIRS": [
+            BASE_DIR / "Clear/templates/clear"
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
