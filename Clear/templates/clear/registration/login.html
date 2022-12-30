@@ -1,0 +1,11 @@
+{% extends "clear/registration/base.html" %}
+{% block content %}
+    <title>CLEAR - Login</title>
+    <!-- templates/registration/login.html -->
+<h2>Log In</h2>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+<button type="submit">Log In</button> </form>
+
+{#    TODO Add register button #}
+{% endblock content %}
