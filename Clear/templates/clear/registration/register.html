@@ -1,0 +1,94 @@
+
+{% extends "clear/registration/base.html" %}
+{% block content %}
+    <title>CLEAR - Register</title>
+    <form method="post" action="{% url 'register' %}" class="form-signin">
+    <h1 class="h3 mb-3 font-weight-normal">Register for CLEAR</h1>
+
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}
+                <p class="alert alert-danger">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.password1.errors %}
+            {% for error in form.password1.errors %}
+                <p class="alert alert-danger">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.password2.errors %}
+            {% for error in form.password2.errors %}
+                <p class="alert alert-danger">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        {% if next %}
+            {% if user.is_authenticated %}
+                <div class="alert alert-danger" role="alert">
+                    Your account doesn't have access to this page. To proceed, please login with an account that has access.
+                </div>
+            {% else %}
+            <div class="alert alert-danger" role="alert">
+            Please login to see this page.
+            </div>
+            {% endif %}
+        {% endif %}
+
+        {% csrf_token %}
+        <label for="username" class="sr-only">Username</label>
+        {{ form.username }}
+        <label for="password1" class="sr-only">Password1</label>
+        {{ form.password1 }}
+        <label for="password2" class="sr-only">Password2</label>
+        {{ form.password2 }}
+        <label for="dob" class="sr-only">Date of Birth</label>
+        {{ form.dob }}
+
+        {% if form.dob.errors %}
+            {% for error in form.dob.errors %}
+                <p class="alert alert-danger">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        <label for="pollution_limit" class="sr-only">Pollution Limit</label>
+        {{ form.pollution_limit }}
+
+        {% if form.pollution_limit.errors %}
+            {% for error in form.pollution_limit.errors %}
+                <p class="alert alert-danger">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        <label for="consent" class="sr-only">Consent</label>
+        {{ form.consent }}
+
+        {% if form.consent.errors %}
+            {% for error in form.consent.errors %}
+                <p class="alert alert-danger">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    <input type="hidden" name="next" value="{{ next }}">
+        <div class="register-link">
+
+{#          TODO change this to the login link later clear/login#}
+            <a href="#">Cancel</a>
+        </div>
+    </form>
+
+{% endblock content %}
+
