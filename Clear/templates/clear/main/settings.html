@@ -1,7 +1,7 @@
-{% extends "clear/main/base.html" %}
+<!--{% extends "clear/main/base.html" %}-->
 
 <!-- makes nav item active when on this page -->
-{% block nav_item_settings %}active{% endblock nav_item_settings %}
+<!--{% block nav_item_settings %}active{% endblock nav_item_settings %}
 
 {% block content %}
 
@@ -10,4 +10,294 @@
                 <h1 class="page-title display-4" >SETTINGS</h1>
        </div>
     </div>
+{% endblock content %} -->
+
+
+# Anna's front end code for settings
+{% extends "clear/base.html" %}
+{% block content %}
+<html lang="en">
+
+
+
+<head>
+
+	<meta charset="UTF-8" />
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="stylesheet" href="style.css" />
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<title>Settings Design</title>
+
+</head>
+
+
+
+<body>
+    <!--top icons row start-->
+<div class="topbtnrow">
+	<div class="container-fluid">
+
+		<div class="d-flex justify-content-around">
+
+		<a href="#">	<button id="inhalerbtn" class="topbtn fa-solid fa-mask-ventilator"></button></a>
+
+		<a href="#">	<button  id="locationbtn"  class="topbtn fa-solid fa-map-location-dot"></button></a>
+
+			<a href="#">	<button  id="settingbtn"  class="topbtn fa-solid fa-gear"></button></a>
+
+		</div>
+
+	</div>
+</div>
+<!--top icons row end-->
+
+<!--Main form area row start-->
+	<div class="container-fluid">
+
+		<div class="row">
+
+			<h1 class="h1">Settings</h1>
+
+		</div>
+
+		<div class="row mainformarea">
+
+			<div class="col-lg-6">
+
+				<label for="username">
+
+					Username:
+
+					<input type="text" name="" id="username" placeholder="johnadams" />
+
+				</label>
+
+				<label for="password">
+
+					Password:
+
+					<input type="password" name="" id="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+
+				</label>
+
+				<label for="cpassword">
+
+					Confirm Password:
+
+					<input type="password" name="" id="cpassword" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+
+				</label>
+
+				<label for="fname">
+
+					First Name:
+
+					<input type="text" name="" id="fname" placeholder="Nettles" />
+
+				</label>
+
+				<label for="sname">
+
+					Sur Name:
+
+					<input type="text" name="" id="sname" placeholder="Holloway" />
+
+				</label>
+
+				<label for="hpost">
+
+					Home Post Code:
+
+					<input type="text" name="" id="hpost" placeholder="SW7 5AA" />
+
+				</label>
+
+				<label for="wpost">
+
+					Work Post Code:
+
+					<input type="text" name="" id="wpost" placeholder="SW5 9JH" />
+
+				</label>
+
+				<label for="opost">
+
+					Other:
+
+					<input type="text" name="" id="opost" placeholder="W14 4HT" />
+
+				</label>
+
+			</div>
+
+			<div class="col-lg-6">
+
+				<label for="inhaler1">Main Inhaler Type:
+
+					<select name="" id="inhaler1">
+
+						<option value="Beclametasone dipropionate (pMDI)">Beclametasone dipropionate (pMDI)</option>
+
+						<option value="Ciclesonide (pMDI)">Ciclesonide (pMDI)</option>
+
+						<option value="Fluticasone poprionate(pMDI)">Fluticasone poprionate(pMDI)</option>
+
+						<option value="Beclometasone(DPI)">Beclometasone(DPI)</option>
+
+						<option value="Budesonide (DPI)">Budesonide (DPI)</option>
+
+						<option value="Fluticasone poprionate(DPI)">Fluticasone poprionate(DPI)</option>
+
+						<option value="Mometasone (DPI)">Mometasone (DPI)</option>
+
+						<option value="Beclometasone dipropionate with formoterol">Beclometasone dipropionate with formoterol</option>
+
+						<option value="Budesonid with formoterol">Budesonid with formoterol</option>
+
+						<option value="Fluticasone poprionate with formoterol">Fluticasone poprionate with formoterol</option>
+
+						<option value="Fluticasone poprionate with salmeterol">Fluticasone poprionate with salmeterol</option>
+
+						<option value="Fluticasone furoate with vilanterol">Fluticasone furoate with vilanterol</option>
+
+					</select>
+
+				</label>
+
+				<label for="premaining1">Puffs Remaining:
+
+					<input type="text" name="" id="premaining1" placeholder="121" />
+
+				</label>
+
+				<label for="puffs1">Puffs Per Day:
+
+					<select name="" id="puffs1">
+
+						<option value="1">1</option>
+
+						<option value="2">2</option>
+
+						<option value="3" selected>3</option>
+
+						<option value="4">4</option>
+
+						<option value="5">5</option>
+
+						<option value="6">6</option>
+
+					</select>
+
+				</label>
+
+				<label for="inhaler2" class="inhaler2">Second Inhaler Type:
+
+					<select name="" id="inhaler1">
+
+						<option value="Beclametasone dipropionate (pMDI)">Beclametasone dipropionate (pMDI)</option>
+
+						<option value="Ciclesonide (pMDI)">Ciclesonide (pMDI)</option>
+
+						<option value="Fluticasone poprionate(pMDI)">Fluticasone poprionate(pMDI)</option>
+
+						<option value="Beclometasone(DPI)">Beclometasone(DPI)</option>
+
+						<option value="Budesonide (DPI)">Budesonide (DPI)</option>
+
+						<option value="Fluticasone poprionate(DPI)">Fluticasone poprionate(DPI)</option>
+
+						<option value="Mometasone (DPI)">Mometasone (DPI)</option>
+
+						<option value="Beclometasone dipropionate with formoterol">Beclometasone dipropionate with formoterol</option>
+
+						<option value="Budesonid with formoterol">Budesonid with formoterol</option>
+
+						<option value="Fluticasone poprionate with formoterol">Fluticasone poprionate with formoterol</option>
+
+						<option value="Fluticasone poprionate with salmeterol">Fluticasone poprionate with salmeterol</option>
+
+						<option value="Fluticasone furoate with vilanterol">Fluticasone furoate with vilanterol</option>
+
+					</select>
+
+				</label>
+
+				<!--<label for="premaining2">Puffs Remaining:-->
+
+				<!--	<input type="text" name="" id="premaining2" placeholder="190" />-->
+
+				<!--</label>-->
+
+				<!--<label for="puffs2">Puffs Per Day:-->
+
+				<!--	<select name="" id="puffs2">-->
+
+				<!--		<option value="1">1</option>-->
+
+				<!--		<option value="2" selected>2</option>-->
+
+				<!--		<option value="3">3</option>-->
+
+				<!--		<option value="4">4</option>-->
+
+				<!--		<option value="5">5</option>-->
+
+				<!--		<option value="6">6</option>-->
+
+				<!--	</select>-->
+
+				<!--</label>-->
+
+				<button type="button" class="btn btn-primary">Add Inhaler</button>
+
+			</div>
+
+		</div>
+<!--Main form area row end-->
+
+
+<!--footer row start-->
+		<div class="row">
+
+			<div class="col-lg-6">
+
+				<button type="button" class="btn btn-primary btn-lg">
+
+					<i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+					Log Out</button>
+
+			</div>
+
+			<div class="col-lg-6">
+
+				<button type="button" class="btn btn-primary btn-lg">
+
+					<i class="fa-solid fa-floppy-disk"></i>
+
+					Save</button>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!--footer row end-->
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+</body>
+
+
+
+</html>
 {% endblock content %}
