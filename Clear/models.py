@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime
 
+from django.http import request
+
 
 class AppUser(AbstractUser):
     # CASCADE ensures that if a user is deleted, it deletes all things related to it
@@ -149,6 +151,10 @@ class UserInhaler(models.Model):
     def delete_inhaler(self):
         # TODO Complete
         pass
+
+    def log_puff(self):
+        current_user = request.user
+        current_user.puffs_today += 1
 
 
 class PollutionLevelInfo(models.Model):
