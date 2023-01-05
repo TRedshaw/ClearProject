@@ -20,6 +20,7 @@ from . import views
 urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('inhalers/', views.InhalerView.as_view(), name='inhalers'),
+    path('inhaler/log_puff/<int:user_inhaler_id>', views.logInhalerPuff, name='inhaler_log_puff'),
     path('pollution/', views.PollutionView.as_view(), name='pollution'),
     path('settings/', views.SettingsView.as_view(), name='settings')
 

@@ -1,11 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, CreateView
 from Clear.forms import RegisterForm
 from Clear.models import AppUser, UserInhaler
-
-
-
 from django.urls import reverse_lazy
 
 from ClearWeb.settings import AUTH_USER_MODEL
@@ -20,7 +17,6 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('login')
 
 
-# TODO @Libby -  Finish the code for this view section - need to change the tempalte view
 class InhalerView(ListView):
     model = UserInhaler
     template_name = 'clear/main/inhaler.html'
@@ -36,4 +32,7 @@ class SettingsView(TemplateView):
     template_name = 'clear/main/settings.html'
 
 
-
+def logInhalerPuff(request, user_inhaler_id):
+    # you should update you model field here
+    UserInhaler.log_puff(user_inhaler_id)
+    return redirect(reverse_lazy('inhalers'))
