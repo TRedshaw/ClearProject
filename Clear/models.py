@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime
@@ -12,7 +13,7 @@ class AppUser(AbstractUser):
     dob = models.DateField(default=datetime.date.today)
     # PROTECTs the deletion of a UserProfile if a Location is tried to be deleted
     current_location = models.ForeignKey('Location', on_delete=models.PROTECT, related_name='current_users', null=True)
-    pollution_limit = models.IntegerField()
+    pollution_limit = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     consent = models.BooleanField()
 
     REQUIRED_FIELDS = ['dob', 'pollution_limit', 'consent']
@@ -152,9 +153,6 @@ class UserInhaler(models.Model):
         # TODO Complete
         pass
 
-    def log_puff(self):
-        current_user = request.user
-        current_user.puffs_today += 1
 
 
 class PollutionLevelInfo(models.Model):

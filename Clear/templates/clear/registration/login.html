@@ -1,11 +1,43 @@
 {% extends "clear/registration/base.html" %}
 {% block content %}
-    <title>CLEAR - Login</title>
-    <!-- templates/registration/login.html -->
-<h2>Log In</h2>
-<form method="post">{% csrf_token %}
-  {{ form.as_p }}
-<button type="submit">Log In</button> </form>
 
-{#    TODO Add register button #}
+<form method="post" action="{% url 'login' %}" class="form-signin">
+<h1 class="h3 mb-3 font-weight-normal">Login to CLEAR</h1>
+
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            Your username and password didn't match. Please try again.
+        </div>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <div class="alert alert-danger" role="alert">
+                Your account doesn't have access to this page. To proceed, please login with an account that has access.
+            </div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                Please login to see this page.
+            </div>
+        {% endif %}
+    {% endif %}
+
+
+    {% csrf_token %}
+    <label for="username" class="sr-only">Username</label>
+    {{ form.username }}
+
+    <label for="password" class="sr-only mb-2">Password</label>
+    {{ form.password }}
+
+    <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Login</button>
+
+    <div class="register-link mt-2">
+        <a href="/clear/register">Register</a>
+    </div>
+
+    <input type="hidden" name="next" value="{{ next }}">
+
+</form>
+
 {% endblock content %}

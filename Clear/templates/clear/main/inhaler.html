@@ -16,33 +16,39 @@
 
           <div class="row">
 
-            <div class="col-10">
+            <div class="col-xs-12 col-sm-6">
               <h2 class="display-4" >Inhalers</h2>
+                 <div >
+            {% for UserInhaler in object_list %}
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Inhaler: {{Inhaler.UserInhaler.name}}
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Puffs Today: {{UserInhaler.puffs_today}}</li>
+                        <li class="list-group-item">Puffs Remaining: {{UserInhaler.puffs_remaining}}</li>
+                        </ul>
+                    </div>
+                <div class="card-footer">
+                    <form enctype="multipart/form-data" method="post" action="/clear/inhaler/log_puff/{{UserInhaler.id}}">
+                        {% csrf_token %}
+
+                    <button type="submit" class="btn btn-primary">Log Puff</button>
+                        </form>
+                </div>
+                </div>
+
+            {% endfor %}
             </div>
-            <div class="col-2">
+            </div>
+            <div class="col-xs-12 col-sm-2 offset-md-2">
                 <h2 class="display-4" >Alerts</h2>
             </div>
           </div>
 
-          <div class="col-4">
-                    {% for UserInhaler in object_list %}
-                    <div class="row-md-4">
-                        <div class="text-dark">
-                            <div class="card mb-4 box-shadow">
-                                <div class="card-body">
-                                    <h2 style="font-size:18px;font-weight:bold;min-height:42px;">
-                                        Inhaler: {{Inhaler.UserInhaler.inhaler_id_id.name}}</h2>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">Puffs Today: {{UserInhaler.puffs_today}}</small>
-                                        <small class="text-muted">Puffs Remaining: {{UserInhaler.puffs_remaining}}</small>
-                                        <input type="button" value="Log Puff" onclick="log_puff">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-            </div>
+
 
 
         </div>
