@@ -154,6 +154,12 @@ class UserInhaler(models.Model):
         pass
 
 
+    def log_puff(user_inhaler_id):
+        user_inhaler = UserInhaler.objects.get(pk=user_inhaler_id)
+        user_inhaler.puffs_today += 1  # change field
+        user_inhaler.puffs_remaining -= 1
+        user_inhaler.save()  # this will update only
+
 
 class PollutionLevelInfo(models.Model):
     band = models.CharField(max_length=6)

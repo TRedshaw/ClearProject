@@ -26,7 +26,8 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='auth/logout.html'), name='logout'),
     path('password_reset', auth_views.PasswordChangeView.as_view(), name='password_reset'),
 
-    path('inhalers/', views.UserInhalerView.as_view(), name='inhalers'),
+    path('inhalers/', views.InhalerView.as_view(), name='inhalers'),
+    path('inhaler/log_puff/<int:user_inhaler_id>', views.logInhalerPuff, name='inhaler_log_puff'),
     path('pollution/', views.PollutionView.as_view(), name='pollution'),
     path('settings/', views.SettingsView.as_view(), name='settings')
 

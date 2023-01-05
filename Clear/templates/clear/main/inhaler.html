@@ -18,7 +18,7 @@
 
             <div class="col-xs-12 col-sm-6">
               <h2 class="display-4" >Inhalers</h2>
-                 <div >
+
             {% for UserInhaler in object_list %}
 
                 <div class="card mb-4">
@@ -42,12 +42,34 @@
 
             {% endfor %}
             </div>
-            </div>
-            <div class="col-xs-12 col-sm-2 offset-md-2">
-                <h2 class="display-4" >Alerts</h2>
-            </div>
-          </div>
 
+            </div>
+
+            <div class="col-xs-12 col-sm-2 offset-md-2">
+              <h2 class="display-4" >Alerts</h2>
+                <div >
+            {% for UserInhaler in object_list %}
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Inhaler: {{Inhaler.UserInhaler.name}}
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% widthratio UserInhaler.puffs 1 UserInhaler.frequency %}
+                            {%  if UserInhaler.puffs_today > 5 %}
+                                <li class="list-group-item">You have exceeded your daily dosage.</li>
+                            {% endif %}
+                            {%  if UserInhaler.puffs_remaining < 5 %}
+                                <li class="list-group-item">Your inhaler is running low.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+            {% endfor %}
+            </div>
+            </div>
 
 
 
@@ -56,4 +78,5 @@
 
 
 {% endblock content %}
+
 
