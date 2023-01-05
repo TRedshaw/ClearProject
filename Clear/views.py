@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, CreateView
@@ -17,9 +18,12 @@ class RegisterView(CreateView):
     success_url = reverse_lazy('login')
 
 
-class InhalerView(ListView):
+# TODO @Libby -  Finish the code for this view section - need to change the tempalte view
+class UserInhalerView(ListView):
     model = UserInhaler
     template_name = 'clear/main/inhaler.html'
+
+
 
 
 # TODO @Cassy + Kareena - Finish the code for this view sectio n- need to change the tempalte view
