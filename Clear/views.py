@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, CreateView
 from Clear.forms import RegisterForm, SettingsForm
-from Clear.models import AppUser, UserInhaler ,Inhaler,Inhalers
+from Clear.models import AppUser, UserInhaler ,Inhaler
 from django.shortcuts import get_object_or_404
 # from django.views import View
 from django.views.generic import View
@@ -15,12 +15,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import redirect
 from django.contrib import messages
 
-
-
-
 from ClearWeb.settings import AUTH_USER_MODEL
-
-
 
 # Create your views here.
 class RegisterView(CreateView):
@@ -37,20 +32,19 @@ class UserInhalerView(ListView):
     template_name = 'clear/main/inhaler.html'
 
 
-
-
-# TODO @Cassy + Kareena - Finish the code for this view sectio n- need to change the tempalte view
+# TODO @Cassy + Kareena - Finish the code for this view section- need to change the tempalte view
 class PollutionView(TemplateView):
     template_name = 'clear/main/pollution.html'
 
 
 # TODO @Anna -  Finish the code for this view section - need to change the tempalte view
-class SettingsView(LoginRequiredMixin ,UpdateView):
+class SettingsView(LoginRequiredMixin, UpdateView):
     template_name = 'clear/main/settings.html'
     user_form = SettingsForm
+
     def get(self, request):
         user = get_object_or_404(AppUser, id = request.user.id)
-        inhalers = Inhalers.objects.filter(user = request.user)
+        inhalers = UserInhaler.objects.filter(user = request.user)
         user_form = self.user_form(instance = user)
         return render(request, self.template_name, context= {"form":user_form,"inhalers":inhalers})
 
@@ -67,7 +61,7 @@ class SettingsView(LoginRequiredMixin ,UpdateView):
             if inhaler_type and puff_remaining and puffs and per_day:
                 all_user_inhalers=[ {'inahler_id':inahler_id,"type":type,"puff_remaining":puff_remaining,"puffs":puffs,"per_day":per_day} for inahler_id,type,puff_remaining,puffs,per_day in zip(inhaler_id,inhaler_type,puff_remaining,puffs,per_day)]
                 for i in all_user_inhalers:
-                    obj = get_object_or_404(Inhalers,id = i['inahler_id'])
+                    obj = get_object_or_404(UserInhaler,id = i['inhaler_id'])
                     obj.inhaler_type    = i['type']
                     obj.per_Day         = i['per_day']
                     obj.puffs_remaining = i['puff_remaining']
@@ -88,7 +82,7 @@ def add_inhaler(request):
     puffs = request.POST.get('puffs')
     per_day = request.POST.get('per_day')
     if inhaler_type and puff_remaining and puffs and per_day:
-        obj = Inhalers.objects.create(
+        obj = UserInhaler.objects.create(
             user = user,
             inhaler_type = inhaler_type,
             puffs_remaining = puff_remaining,
@@ -106,3 +100,9 @@ def logInhalerPuff(request, user_inhaler_id):
     # you should update you model field here
     UserInhaler.log_puff(user_inhaler_id)
     return redirect(reverse_lazy('inhalers'))
+
+# TODO FIX
+def logCurrentLocation(request, app_user_id):
+    # you should update you model field here
+    AppUser.set_new_current_location(app_user_id)
+    return redirect(reverse_lazy('pollution'))
