@@ -1,4 +1,3 @@
-
 {% extends "clear/registration/base.html" %}
 {% block content %}
     <title>CLEAR - Register</title>
@@ -41,16 +40,6 @@
             {% endif %}
         {% endif %}
 
-        {% csrf_token %}
-        <label for="username" class="sr-only">Username</label>
-        {{ form.username }}
-        <label for="password1" class="sr-only">Password1</label>
-        {{ form.password1 }}
-        <label for="password2" class="sr-only">Password2</label>
-        {{ form.password2 }}
-        <label for="dob" class="sr-only">Date of Birth</label>
-        {{ form.dob }}
-
         {% if form.dob.errors %}
             {% for error in form.dob.errors %}
                 <p class="alert alert-danger">
@@ -58,9 +47,6 @@
                 </p>
             {% endfor %}
         {% endif %}
-
-        <label for="pollution_limit" class="sr-only">Pollution Limit</label>
-        {{ form.pollution_limit }}
 
         {% if form.pollution_limit.errors %}
             {% for error in form.pollution_limit.errors %}
@@ -70,9 +56,6 @@
             {% endfor %}
         {% endif %}
 
-        <label for="consent" class="sr-only">Consent</label>
-        {{ form.consent }}
-
         {% if form.consent.errors %}
             {% for error in form.consent.errors %}
                 <p class="alert alert-danger">
@@ -81,13 +64,34 @@
             {% endfor %}
         {% endif %}
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-    <input type="hidden" name="next" value="{{ next }}">
-        <div class="register-link">
+        {% csrf_token %}
+        <label for="username" class="sr-only">Username</label>
+        {{ form.username }}
 
-{#          TODO change this to the login link later clear/login#}
-            <a href="#">Cancel</a>
+        <label for="password1" class="sr-only">Password1</label>
+        {{ form.password1 }}
+
+        <label for="password2" class="sr-only">Password2</label>
+        {{ form.password2 }}
+
+        <label for="dob" class="sr-only">Date of Birth</label>
+        {{ form.dob }}
+
+        <label for="pollution_limit" class="sr-only">Pollution Limit</label>
+        {{ form.pollution_limit }}
+
+        <div class="form-check mb-3 mt-3">
+            {{ form.consent }}
+            <label for="consent" class="form-check-label ">Consent to Data Collection</label>
         </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="register-link mt-3">
+            <a href="{% url 'login' %}">Cancel</a>
+        </div>
+
     </form>
 
 {% endblock content %}
