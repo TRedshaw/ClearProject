@@ -26,10 +26,11 @@ class AppUser(AbstractUser):
     def __str__(self):
         return self.username
 
-    # TODO @Kareena + Cassy - Current location code in the 2 below functions
+    # TODO FIX
     def set_new_current_location(self):
-        # TODO set it so when the user enters their current location, it updates the current location field
-        pass
+        current_location = AppUser.objects.get(pk=id)
+        current_location.current_location_id = 1  # change field
+        current_location.save()  # this will update only
 
     def quick_set_current_location(self):
         # TODO For when they choose just work or other or home it gives them the pollution level by clicking

@@ -73,3 +73,7 @@ class SettingsForm(forms.ModelForm):
         model = AppUser
         fields=['username','first_name','last_name','home_postcode','work_postcode','other_postcode']
 
+# TODO FIX
+class CurrentLocationForm(forms.ModelForm):
+    current_location = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'current_location', 'placeholder': 'Current Location'}))
