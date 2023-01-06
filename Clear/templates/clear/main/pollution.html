@@ -41,8 +41,6 @@
 
     <body>
 
-
-
         <div class="container">
             <h1>Map of London</h1>
             <div id='map' width="100%" style='height:600px'>
@@ -57,6 +55,38 @@
                     center: [-0.163611, 51.500610], // starting position [lng, lat]
                     zoom: 11 // starting zoom
                 });
+
+                map.on('load', () => {
+                    // Add a data source containing GeoJSON data.
+                    map.addSource('maine', {
+                    'type': 'geojson',
+                    'data': 'https://raw.githubusercontent.com/sjwhitworth/london_geojson/master/london_postcodes.json'
+
+                    });
+
+                    // Add a new layer to visualize the polygon.
+                    map.addLayer({
+                    'id': 'zip-codes',
+                    'type': 'fill',
+                    'source': 'maine', // reference the data source
+                    'layout': {},
+                    'paint': {
+                    'fill-color': '#0080ff', // blue color fill
+                    'fill-opacity': 0.5
+                    }
+                    });
+                    // Add a black outline around the polygon.
+                    map.addLayer({
+                    'id': 'outline',
+                    'type': 'line',
+                    'source': 'maine',
+                    'layout': {},
+                    'paint': {
+                    'line-color': '#000',
+                    'line-width': 3
+                    }
+                    });
+                    });
 
 
         </script>
