@@ -22,7 +22,6 @@ class InhalerView(ListView):
     template_name = 'clear/main/inhaler.html'
 
 
-
 # TODO @Cassy + Kareena - Finish the code for this view sectio n- need to change the tempalte view
 class PollutionView(TemplateView):
     template_name = 'clear/main/pollution.html'
@@ -37,23 +36,3 @@ def logInhalerPuff(request, user_inhaler_id):
     # you should update you model field here
     UserInhaler.log_puff(user_inhaler_id)
     return redirect(reverse_lazy('inhalers'))
-
-'''
-def computeDosage(request, user_inhaler_id):
-    current_user_id = request.user.id
-    user_inhaler = UserInhaler.objects.get(pk=user_inhaler_id)
-    dosage = user_inhaler.puffs * user_inhaler.frequency
-    context = {
-        "dose": dosage,
-        "current_user": current_user_id
-    }
-    return render(request, 'inhaler.html', context)
-'''
-
-
-def currentUser(request):
-    current_user = request.user
-    user_id = current_user.id
-    context = {"user_id": user_id}
-    return render(request, 'clear/main/inhaler.html', context)
-
