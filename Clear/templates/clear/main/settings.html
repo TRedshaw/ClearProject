@@ -1,269 +1,237 @@
+
 {% extends "clear/main/base.html" %}
 
+{% block extra_css %}
+	<style>
+		body{
+			background-color: #D9EDFD;
+		}
+	</style>
+{% endblock extra_css %}
 <!-- makes nav item active when on this page -->
 {% block nav_item_settings %}active{% endblock nav_item_settings %}
-
 {% block content %}
+    <title text-center>Settings Design</title>
+	<div class="container pt-3 pb-5">
 
+		<form method="post" class="form-signin">
+		{% csrf_token %}
 
+		<h1 class="h3 font-weight-normal mb-3 text-center ">Settings</h1>
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert- {{ message.tags }} col-12">{{message}}</div>
+		{% endfor %}
+		{% endif %}
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="form-group mb-0">
+						<label for="username"  class="">Username:</label>
+						{{form.username}}
+					</div>
+					<div class="from-group">
+						<label for="first_name" class="">First Name:</label>
+						{{form.first_name}}
+					</div>
+					<div class="from-group">
+						<label for="Surname" class="">Surname:</label>
+						{{form.last_name}}
+					</div>
+					<div class="from-group">
+						<label for="home_postcode" class="">Home Postcode:</label>
+						{{form.home_postcode}}
+					</div>
+					<div class="from-group">
+						<label for="Work_postcode" class="">Work Postcode:</label>
+						{{form.work_postcode}}
+					</div>
+					<div class="from-group">
+						<label for="other_postcode" class="">Other Postcode:</label>
+						{{form.other_postcode}}
+					</div>
+				</div>
+                <div class="col-lg-6">
+					{% if inhalers %}
+					{% for inhaler in inhalers %}
+					<input type="hidden" name="inhaler_id" value="{{inhaler.id}}">
+					<div class="from-group">
+						{% if forloop.counter  == 1 %}
+						<label for="main_inheler" class="">Main Inhaler Type</label>
+						{% else %}
+						<label for="main_inheler" class="">Secondary Inhaler Type</label>
+						{% endif %}
+						<select class="form-control form-control-sm" name="inhaler_type"  id="main_inheler">
+							<option value="Beclametasone_dipropionate"{% if inhaler.inhaler_type == 'Beclametasone_dipropionate' %}selected{% endif %}>Beclametasone dipropionate (pMDI)</option>
 
-    <div class="container">
-       <div class="row justify-content-center">
-            <h1 class="page-title display-4" >SETTINGS</h1>
-       </div>
+							<option value="Ciclesonide"{% if inhaler.inhaler_type == 'Ciclesonide' %}selected{% endif %}>Ciclesonide (pMDI)</option>
 
+							<option value="Fluticasone_poprionate"{% if inhaler.inhaler_type == 'Fluticasone_poprionate' %}selected{% endif %}>Fluticasone poprionate(pMDI)</option>
 
-<!-- Anna's front end code for settings-->
+							<option value="Beclometasone"{% if inhaler.inhaler_type == 'Beclometasone' %}selected{% endif %}>Beclometasone(DPI)</option>
 
+							<option value="Budesonide"{% if inhaler.inhaler_type == 'Budesonide' %}selected{% endif %}>Budesonide (DPI)</option>
 
+							<option value="Fluticasone_poprionate"{% if inhaler.inhaler_type == 'Fluticasone_poprionate' %}selected{% endif %}>Fluticasone poprionate(DPI)</option>
 
-        <!--top icons row start-->
-        <div class="topbtnrow">
-            <div class="container-fluid">
+							<option value="Mometasone"{% if inhaler.inhaler_type == 'Mometasone' %}selected{% endif %}>Mometasone (DPI)</option>
 
-                <div class="d-flex justify-content-around">
+							<option value="Beclometasone_dipropionate_with_ormoterol"{% if inhaler.inhaler_type == 'Beclometasone_dipropionate_with_ormoterol' %}selected{% endif %}>Beclometasone dipropionate with formoterol</option>
 
-                <button class="btn btn-primary"><i class="fa-solid fa-mask-ventilator"></i></button>
+							<option value="Budesonid_with_formoterol"{% if inhaler.inhaler_type == 'Budesonid_with_formoterol' %}selected{% endif %}>Budesonid with formoterol</option>
 
-                    <a href="#" class="btn btn-primary"><i class="fa-solid fa-map-location-dot"></i></a>
+							<option value="Fluticasone_poprionate_with_formoterol"{% if inhaler.inhaler_type == 'Fluticasone_poprionate_with_formoterol' %}selected{% endif %}>Fluticasone poprionate with formoterol</option>
 
-                    <a href="#">	<button  id="settingbtn"  class="topbtn fa-solid fa-gear"></button></a>
+							<option value="Fluticasone_poprionate_with_salmeterol"{% if inhaler.inhaler_type == 'Fluticasone_poprionate_with_salmeterol' %}selected{% endif %}>Fluticasone poprionate with salmeterol</option>
 
-                </div>
+							<option value="Fluticasone_furoate_with_vilanterol"{% if inhaler.inhaler_type == 'Fluticasone_furoate_with_vilanterol' %}selected{% endif %}>Fluticasone furoate with vilanterol</option>
+						</select>
+					</div>
+					<div class="from-group">
+						<label for="Puffs_Remaining " class="">Puffs Remaining </label>
+						<select class="form-control form-control-sm" name="puff_remaining" id="Puffs_Remaining">
+							<option value="10" {% if inhaler.puffs_remaining == '10'%} selected {% endif %}>10</option>
+							<option value="20" {% if inhaler.puffs_remaining == '20'%} selected {% endif %}>20</option>
+							<option value="30" {% if inhaler.puffs_remaining == '30'%} selected {% endif %}>30</option>
+							<option value="40" {% if inhaler.puffs_remaining == '40'%} selected {% endif %}>40</option>
+							<option value="50" {% if inhaler.puffs_remaining == '50'%} selected {% endif %}>50</option>
+							<option value="60" {% if inhaler.puffs_remaining == '60'%} selected {% endif %}>60</option>
+							<option value="70" {% if inhaler.puffs_remaining == '70'%} selected {% endif %}>70</option>
+							<option value="80" {% if inhaler.puffs_remaining == '80'%} selected {% endif %}>80</option>
+							<option value="90" {% if inhaler.puffs_remaining == '90'%} selected {% endif %}>90</option>
+							<option value="100" {% if inhaler.puffs_remaining == '100'%} selected {% endif %}>100</option>
+						</select>
+					</div>
+					<div class="from-group">
+						<label for="Puffs" class="">Puffs </label>
+						<select class="form-control form-control-sm" name="puffs" id="Puffs">
+							<option value="1" {% if inhaler.puffs == '1'%} selected {% endif %}>1</option>
+							<option value="2" {% if inhaler.puffs == '2'%} selected {% endif %}>2</option>
+							<option value="3" {% if inhaler.puffs == '3'%} selected {% endif %}>3</option>
+							<option value="4" {% if inhaler.puffs == '4'%} selected {% endif %}>4</option>
+							<option value="5" {% if inhaler.puffs == '5'%} selected {% endif %}>5</option>
+							<option value="6" {% if inhaler.puffs == '6'%} selected {% endif %}>6</option>
+							<option value="7" {% if inhaler.puffs == '7'%} selected {% endif %}>7</option>
+							<option value="8" {% if inhaler.puffs == '8'%} selected {% endif %}>8</option>
+							<option value="9" {% if inhaler.puffs == '9'%} selected {% endif %}>9</option>
+							<option value="10"{% if inhaler.puffs == '10'%} selected {% endif %}>10</option>
+						</select>
+					</div>
+					<div class="from-group">
+						<label for="Per_Day" class="">Per Day</label>
+						<select class="form-control form-control-sm mr-3" name="per_day" id="Per_Day">
+							<option value="1" {% if inhaler.per_Day == '1'%} selected {% endif %}>1</option>
+							<option value="2" {% if inhaler.per_Day == '2'%} selected {% endif %}>2</option>
+							<option value="3" {% if inhaler.per_Day == '3'%} selected {% endif %}>3</option>
+							<option value="4" {% if inhaler.per_Day == '4'%} selected {% endif %}>4</option>
+							<option value="5" {% if inhaler.per_Day == '5'%} selected {% endif %}>5</option>
+							<option value="6" {% if inhaler.per_Day == '6'%} selected {% endif %}>6</option>
+							<option value="7" {% if inhaler.per_Day == '7'%} selected {% endif %}>7</option>
+							<option value="8" {% if inhaler.per_Day == '8'%} selected {% endif %}>8</option>
+							<option value="9" {% if inhaler.per_Day == '9'%} selected {% endif %}>9</option>
+							<option value="10"{% if inhaler.per_Day == '10'%} selected {% endif %}>10</option>
+						</select>
+					</div>
+					{% endfor %}
+					{% endif %}
+					<div class="d-flex justify-content-end mt-3" >
+						<button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#exampleModalCenter">Add Inhaler</button>
+					</div>
+			    </div>
+		    </div>
 
-            </div>
-        </div>
-        <!--top icons row end-->
-
-<!--Main form area row start-->
-
-
-
-		<div class="row mainformarea form ">
-
-			<div class="col-lg-6">
-
-                <div class="form-group col-form-label">
-				<label for="username">
-					Username:
-				</label>
-
-					<input type="text" class="form-control form-text" name="" id="username" placeholder="johnadams" />
-
-                </div>
-
-				<label for="password">
-
-					Password:
-
-					<input type="password" name="" id="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
-
-				</label>
-
-				<label for="cpassword">
-
-					Confirm Password:
-
-					<input type="password" name="" id="cpassword" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
-
-				</label>
-
-				<label for="fname">
-
-					First Name:
-
-					<input type="text" name="" id="fname" placeholder="Nettles" />
-
-				</label>
-
-				<label for="sname">
-
-					Surname:
-
-					<input type="text" name="" id="sname" placeholder="Holloway" />
-
-				</label>
-
-				<label for="hpost">
-
-					Home Postcode:
-
-					<input type="text" name="" id="hpost" placeholder="SW7 5AA" />
-
-				</label>
-
-				<label for="wpost">
-
-					Work Postcode:
-
-					<input type="text" name="" id="wpost" placeholder="SW5 9JH" />
-
-				</label>
-
-				<label for="opost">
-
-					Other:
-
-					<input type="text" name="" id="opost" placeholder="W14 4HT" />
-
-				</label>
-
+			<div class="d-flex justify-content-end mt-3" >
+				<button class="btn btn-lg btn-primary" type="submit">
+					<i class="fa-solid fa-floppy-disk mr-3"></i>Save</button>
 			</div>
+		</form>
+    </div>
 
-			<div class="col-lg-6">
-
-				<label for="inhaler1">Main Inhaler Type:
-
-					<select name="" id="inhaler1">
-
-						<option value="Beclametasone dipropionate (pMDI)">Beclametasone dipropionate (pMDI)</option>
-
-						<option value="Ciclesonide (pMDI)">Ciclesonide (pMDI)</option>
-
-						<option value="Fluticasone poprionate(pMDI)">Fluticasone poprionate(pMDI)</option>
-
-						<option value="Beclometasone(DPI)">Beclometasone(DPI)</option>
-
-						<option value="Budesonide (DPI)">Budesonide (DPI)</option>
-
-						<option value="Fluticasone poprionate(DPI)">Fluticasone poprionate(DPI)</option>
-
-						<option value="Mometasone (DPI)">Mometasone (DPI)</option>
-
-						<option value="Beclometasone dipropionate with formoterol">Beclometasone dipropionate with formoterol</option>
-
-						<option value="Budesonid with formoterol">Budesonid with formoterol</option>
-
-						<option value="Fluticasone poprionate with formoterol">Fluticasone poprionate with formoterol</option>
-
-						<option value="Fluticasone poprionate with salmeterol">Fluticasone poprionate with salmeterol</option>
-
-						<option value="Fluticasone furoate with vilanterol">Fluticasone furoate with vilanterol</option>
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLongTitle">Add Inhaler</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		</div>
+		<form method="post" action="{% url 'add_inhaler' %}" >
+		{% csrf_token %}
+		<div class="modal-body">
+				<div class="from-group mb-1">
+					<label for="main_inheler" class="">Inhaler Type</label>
+					<select class="form-control form-control-sm" name="inhaler_type" id="main_inheler">
+						<option value="Beclametasone_dipropionate">Beclametasone dipropionate (pMDI)</option>
+						<option value="Ciclesonide">Ciclesonide (pMDI)</option>
+						<option value="Fluticasone_poprionate">Fluticasone poprionate(pMDI)</option>
+						<option value="Beclometasone">Beclometasone(DPI)</option>
+						<option value="Budesonide">Budesonide (DPI)</option>
+						<option value="Fluticasone_poprionate">Fluticasone poprionate(DPI)</option>
+						<option value="Mometasone">Mometasone (DPI)</option>
+						<option value="Beclometasone_dipropionate_with_ormoterol">Beclometasone dipropionate with formoterol</option>
+						<option value="Budesonid_with_formoterol">Budesonid with formoterol</option>
+						<option value="Fluticasone_poprionate_with_formoterol">Fluticasone poprionate with formoterol</option>
+						<option value="Fluticasone_poprionate_with_salmeterol">Fluticasone poprionate with salmeterol</option>
+						<option value="Fluticasone_furoate_with_vilanterol">Fluticasone furoate with vilanterol</option>
 					</select>
-
-				</label>
-
-				<label for="premaining1">Puffs Remaining:
-
-					<input type="text" name="" id="premaining1" placeholder="121" />
-
-				</label>
-
-				<label for="puffs1">Puffs Per Day:
-
-					<select name="" id="puffs1">
-
+				</div>
+				<div class="from-group mb-1">
+					<label for="Puffs_Remaining " class="">Puffs Remaining </label>
+					<select class="form-control  form-control-sm" name="puff_remaining" id="Puffs_Remaining">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+						<option value="50">50</option>
+						<option value="60">60</option>
+						<option value="70">70</option>
+						<option value="80">80</option>
+						<option value="90">90</option>
+						<option value="100">100</option>
+					</select>
+				</div>
+				<div class="from-group mb-1">
+					<label for="Puffs" class="">Puffs </label>
+					<select class="form-control  form-control-sm" name="puffs" id="Puffs">
 						<option value="1">1</option>
-
 						<option value="2">2</option>
-
-						<option value="3" selected>3</option>
-
+						<option value="3">3</option>
 						<option value="4">4</option>
-
 						<option value="5">5</option>
-
 						<option value="6">6</option>
-
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
 					</select>
-
-				</label>
-
-				<label for="inhaler2" class="inhaler2">Second Inhaler Type:
-
-					<select name="" id="inhaler1">
-
-						<option value="Beclametasone dipropionate (pMDI)">Beclametasone dipropionate (pMDI)</option>
-
-						<option value="Ciclesonide (pMDI)">Ciclesonide (pMDI)</option>
-
-						<option value="Fluticasone poprionate(pMDI)">Fluticasone poprionate(pMDI)</option>
-
-						<option value="Beclometasone(DPI)">Beclometasone(DPI)</option>
-
-						<option value="Budesonide (DPI)">Budesonide (DPI)</option>
-
-						<option value="Fluticasone poprionate(DPI)">Fluticasone poprionate(DPI)</option>
-
-						<option value="Mometasone (DPI)">Mometasone (DPI)</option>
-
-						<option value="Beclometasone dipropionate with formoterol">Beclometasone dipropionate with formoterol</option>
-
-						<option value="Budesonid with formoterol">Budesonid with formoterol</option>
-
-						<option value="Fluticasone poprionate with formoterol">Fluticasone poprionate with formoterol</option>
-
-						<option value="Fluticasone poprionate with salmeterol">Fluticasone poprionate with salmeterol</option>
-
-						<option value="Fluticasone furoate with vilanterol">Fluticasone furoate with vilanterol</option>
-
+				</div>
+				<div class="from-group">
+					<label for="Per_Day" class="">Per Day</label>
+					<select class="form-control  form-control-sm" name="per_day" id="Per_Day">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
 					</select>
+				</div>
 
-				</label>
-
-				<!--<label for="premaining2">Puffs Remaining:-->
-
-				<!--	<input type="text" name="" id="premaining2" placeholder="190" />-->
-
-				<!--</label>-->
-
-				<!--<label for="puffs2">Puffs Per Day:-->
-
-				<!--	<select name="" id="puffs2">-->
-
-				<!--		<option value="1">1</option>-->
-
-				<!--		<option value="2" selected>2</option>-->
-
-				<!--		<option value="3">3</option>-->
-
-				<!--		<option value="4">4</option>-->
-
-				<!--		<option value="5">5</option>-->
-
-				<!--		<option value="6">6</option>-->
-
-				<!--	</select>-->
-
-				<!--</label>-->
-
-				<button type="button" class="btn btn-primary">Add Inhaler</button>
-
-			</div>
 
 		</div>
-<!--Main form area row end-->
-
-
-<!--footer row start-->
-		<div class="row">
-
-			<div class="col-lg-6">
-
-				<button type="button" class="btn btn-primary btn-lg">
-
-					<i class="fa-solid fa-arrow-right-from-bracket"></i>
-
-					Log Out</button>
-
-			</div>
-
-			<div class="col-lg-6">
-
-				<button type="button" class="btn btn-primary btn-lg">
-
-					<i class="fa-solid fa-floppy-disk"></i>
-
-					Save</button>
-
-			</div>
-
+		<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		<button type="submit"  class="btn btn-primary">Add</button>
 		</div>
-
+	    </form>
 	</div>
+	</div>
+</div>
 
-	<!--footer row end-->
+{% endblock content %}
 
-
-<!--{% endblock content %}-->
