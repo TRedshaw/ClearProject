@@ -96,7 +96,7 @@ def add_inhaler(request):
             per_Day = per_day
         )
         obj.save()
-        messages.success(request,'Inahler has been added successfully')
+        messages.success(request,'Inhaler has been added successfully')
         return redirect('settings')
     else:
         messages.error(request,'Please fill in all required fields')

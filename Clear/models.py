@@ -160,6 +160,53 @@ class UserInhaler(models.Model):
         user_inhaler.puffs_remaining -= 1
         user_inhaler.save()  # this will update only
 
+class Inhalers(models.Model):
+    inhaler_type = (
+        ('Beclametasone_dipropionate', 'Beclametasone_dipropionate'),
+        ('Ciclesonide', 'Ciclesonide'),
+        ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
+        ('Beclometasone', 'Beclometasone'),
+        ('Budesonide', 'Budesonide'),
+        ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
+        ('Mometasone', 'Mometasone'),
+        ('Beclometasone_dipropionate_with_ormoterol', 'Beclometasone_dipropionate_with_ormoterol'),
+        ('Budesonid_with_formoterol', 'Budesonid_with_formoterol'),
+        ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
+        ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
+        ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
+    )
+
+    remaing_puff_choice = (
+        ('10', '10'),
+        ('20', '20'),
+        ('30', '30'),
+        ('40', '40'),
+        ('50', '50'),
+        ('60', '60'),
+        ('70', '70'),
+        ('80', '80'),
+        ('90', '90'),
+        ('100','100'),
+    )
+    puffs_per_Day = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
+        ('7', '7'),
+        ('8', '8'),
+        ('9', '9'),
+        ('10','10'),
+    )
+
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inhaler_user', null=False)
+    inhaler_type = models.CharField(max_length=200, choices=inhaler_type)
+    puffs_remaining = models.CharField(max_length=20, choices=remaing_puff_choice)
+    puffs = models.CharField(max_length=200, choices=puffs_per_Day)
+    per_Day = models.CharField(max_length=20, choices=puffs_per_Day)
 
 class PollutionLevelInfo(models.Model):
     band = models.CharField(max_length=6)

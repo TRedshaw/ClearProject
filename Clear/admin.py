@@ -9,6 +9,6 @@ admin.site.register(Inhaler)
 admin.site.register(UserInhaler)
 admin.site.register(PollutionLevels)
 admin.site.register(PollutionLevelInfo)
-
+admin.site.register(Inhalers)
 
 # Register your models here.
