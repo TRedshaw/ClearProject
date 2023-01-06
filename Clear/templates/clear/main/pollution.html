@@ -1,13 +1,94 @@
 {% extends "clear/main/base.html" %}
 
+{% comment %}<!DOCTYPE html>
+<html>
+  <head>
+    <title>Interactive maps for Django web apps</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+  </head>
+  <body>
+   <h1>Map time!</h1>
+   <div id='map' width="100%" style='height:400px'></div>
+   <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc3lkbzAyIiwiYSI6ImNsY2R1dXYwbTRtMWczd21uMWM2ZGtxd24ifQ.NhYgnpmMpFsO_mtwOmzYsw';
+    var map = new mapboxgl.Map({
+     container: 'map',
+     style: 'mapbox://styles/mapbox/streets-v10',
+     center: [-74.5, 40], // starting position [lng, lat]
+     zoom: 9 // starting zoom
+    });
+   </script>
+  </body>
+</html>{% endcomment %}
+
+
 <!-- makes nav item active when on this page -->
 {% block nav_item_pollution %}active{% endblock nav_item_pollution %}
 
 {% block content %}
+    <head>
+        <title>Interactive maps for Django web apps</title>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+    </head>
+
     <div class="container">
        <div class="row justify-content-center">
             <h1 class="page-title display-4" >POLLUTION</h1>
        </div>
     </div>
 
+    <body>
+
+        <div class="container">
+            <h1>Map of London</h1>
+            <div id='map' width="100%" style='height:600px'>
+        </div>
+
+
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiY2Fzc3lkbzAyIiwiYSI6ImNsY2R1dXYwbTRtMWczd21uMWM2ZGtxd24ifQ.NhYgnpmMpFsO_mtwOmzYsw';
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v10',
+                    center: [-0.163611, 51.500610], // starting position [lng, lat]
+                    zoom: 11 // starting zoom
+                });
+
+                map.on('load', () => {
+                    // Add a data source containing GeoJSON data.
+                    map.addSource('maine', {
+                    'type': 'geojson',
+                    'data': 'https://raw.githubusercontent.com/sjwhitworth/london_geojson/master/london_postcodes.json'
+
+                    });
+
+                    // Add a new layer to visualize the polygon.
+                    map.addLayer({
+                    'id': 'zip-codes',
+                    'type': 'fill',
+                    'source': 'maine', // reference the data source
+                    'layout': {},
+                    'paint': {
+                    'fill-color': '#0080ff', // blue color fill
+                    'fill-opacity': 0.5
+                    }
+                    });
+                    // Add a black outline around the polygon.
+                    map.addLayer({
+                    'id': 'outline',
+                    'type': 'line',
+                    'source': 'maine',
+                    'layout': {},
+                    'paint': {
+                    'line-color': '#000',
+                    'line-width': 3
+                    }
+                    });
+                    });
+
+
+        </script>
+    <body>
 {% endblock content %}
