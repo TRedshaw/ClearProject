@@ -72,7 +72,28 @@ class SettingsForm(forms.ModelForm):
         model = AppUser
         fields=['username','first_name','last_name','home_postcode','work_postcode','other_postcode']
 
-# TODO FIX
-class CurrentLocationForm(forms.ModelForm):
-    current_location = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'current_location', 'placeholder': 'Current Location'}))
+# # TODO FIX
+# class CurrentLocationForm(forms.ModelForm):
+#     current_location = forms.CharField(
+#         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'current_location', 'placeholder': 'Current Location'}))
+#
+#     class LocationForm(UserCreationForm):
+#         class Meta(UserCreationForm):
+#             model = AppUser
+#             fields = UserCreationForm.Meta.fields + ('current_location')
+#
+#         current_location = forms.DateField(
+#             widget=forms.DateInput(
+#                 attrs={'class': 'form-control',
+#                        'type': 'text',
+#                        'onfocus': "(this.type='date')",
+#                        'placeholder': 'Date of Birth'}))
+#
+#     class LocationForm(forms.ModelForm):
+#         class Meta:
+#             model = AppUser
+#             fields = UserCreationForm.Meta.fields + ('current_location')
+#
+#         def __init__(self, *args, **kwargs):
+#             super().__init__(*args, **kwargs)
+#             self.fields['city'].queryset = City.objects.none()
