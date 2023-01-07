@@ -60,6 +60,9 @@
                                 {%  if UserInhaler.puffs_remaining < 5 %}
                                     <li class="list-group-item">Your inhaler is running low.</li>
                                 {% endif %}
+                                {%  if UserInhaler.puffs_remaining <= 0 %}
+                                    <li class="list-group-item">Your inhaler has run out, please add your new one in Settings.</li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
