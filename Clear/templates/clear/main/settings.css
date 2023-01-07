@@ -11,13 +11,7 @@
     background: rgb(212, 238, 255);
 }
 
-.container-mapwarning {
-    background: rgb(212, 238, 255);
-	padding: 0 100px;
-}
-
-
-h1 {
+.h1 {
     font-size: 60px !important;
     text-align: center;
     font-weight: 400 !important;
