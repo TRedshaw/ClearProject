@@ -20,7 +20,7 @@
               <h2 class="display-4" >Inhalers</h2>
 
             {% for UserInhaler in object_list %}
-
+                {%  if UserInhaler.user_id_id == 1 %} <!- need to replace '1' with current_user somehow ->
                 <div class="card mb-4">
                     <div class="card-header">
                         Inhaler: {{Inhaler.UserInhaler.name}}
@@ -38,7 +38,7 @@
                     </form>
                 </div>
                 </div>
-
+                {% endif %}
             {% endfor %}
             </div>
 
@@ -47,24 +47,26 @@
             <div class="col-xs-12 col-sm-5 offset-md-1">
               <h2 class="display-4" >Alerts</h2>
                 {% for UserInhaler in object_list %}
-
+                    {%  if UserInhaler.user_id_id == 1 %} <!- need to replace '1' with current_user somehow ->
                     <div class="card mb-4">
                         <div class="card-header">
                             Inhaler: {{Inhaler.UserInhaler.name}}
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                {% widthratio UserInhaler.puffs 1 UserInhaler.frequency %}
-                                {%  if UserInhaler.puffs_today > 5 %}
+                                {%  if UserInhaler.puffs_today > UserInhaler.puffs_per_day %}
                                     <li class="list-group-item">You have exceeded your daily dosage.</li>
                                 {% endif %}
                                 {%  if UserInhaler.puffs_remaining < 5 %}
                                     <li class="list-group-item">Your inhaler is running low.</li>
                                 {% endif %}
+                                {%  if UserInhaler.puffs_remaining <= 0 %}
+                                    <li class="list-group-item">Your inhaler has run out, please add your new one in Settings.</li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
-
+                    {% endif %}
                 {% endfor %}
             </div>
 
