@@ -106,3 +106,8 @@ def logCurrentLocation(request, app_user_id):
     # you should update you model field here
     AppUser.set_new_current_location(app_user_id)
     return redirect(reverse_lazy('pollution'))
+
+def currentUser(request):
+    current_user = request.user.id
+    context = {"user_id": current_user}
+    return render(request, 'clear/main/inhaler.html', context)
