@@ -248,3 +248,18 @@ class PollutionLevels(models.Model):
         # TODO Complete - when the table updates, will need to set all flags to false, and import all new, current,
         #  pollution levels to true
         pass
+
+class Boroughs(models.Model):
+
+OutwardName = models.CharField(max_length=128)
+ApiName = models.CharField(max_length=128)
+
+class Meta:
+    verbose_name = 'Boroughs'
+    verbose_name_plural = 'Boroughs'
+    ordering = ['ApiName']
+
+def __str__(self):
+    return self.OutwardName
+
+
