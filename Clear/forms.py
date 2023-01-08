@@ -64,10 +64,9 @@ class SettingsForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'surname', 'placeholder': 'First Name'}))
     last_name = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'surname', 'placeholder': 'Surname'}))
-    home_postcode = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'home_postcode', 'placeholder': 'home Postcode'}))
+    home_postcode = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'home_postcode', 'placeholder': 'home Postcode'}))
     work_postcode = forms.CharField(required=False,widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'work_postcode', 'placeholder': 'Work Postcode'}))
-    other_postcode = forms.CharField(required=False,widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'other_postcord', 'placeholder': 'Other Postcode'}))
+    other_postcode = forms.CharField(required=False,widget=forms.TextInput(attrs={'class': 'form-control form-control-sm', 'id': 'other_postcode', 'placeholder': 'Other Postcode'}))
 
     class Meta:
         model = AppUser
