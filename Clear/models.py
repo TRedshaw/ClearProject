@@ -26,10 +26,11 @@ class AppUser(AbstractUser):
     def __str__(self):
         return self.username
 
-    # TODO @Kareena + Cassy - Current location code in the 2 below functions
+    # TODO FIX
     def set_new_current_location(self):
-        # TODO set it so when the user enters their current location, it updates the current location field
-        pass
+        current_location = AppUser.objects.get(pk=id)
+        current_location.current_location_id = 1  # change field
+        current_location.save()  # this will update only
 
     def quick_set_current_location(self):
         # TODO For when they choose just work or other or home it gives them the pollution level by clicking
@@ -247,3 +248,18 @@ class PollutionLevels(models.Model):
         # TODO Complete - when the table updates, will need to set all flags to false, and import all new, current,
         #  pollution levels to true
         pass
+
+class Boroughs(models.Model):
+
+OutwardName = models.CharField(max_length=128)
+ApiName = models.CharField(max_length=128)
+
+class Meta:
+    verbose_name = 'Boroughs'
+    verbose_name_plural = 'Boroughs'
+    ordering = ['ApiName']
+
+def __str__(self):
+    return self.OutwardName
+
+

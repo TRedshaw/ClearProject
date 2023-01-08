@@ -33,9 +33,6 @@ class RegisterView(CreateView):
 
 # TODO @Libby -  Finish the code for this view section - need to change the tempalte view
 class UserInhalerView(ListView):
-    def get_queryset(self):
-        qs = UserInhaler.objects.filter(user_id=self.request.user)
-        return qs
     model = UserInhaler
     template_name = 'clear/main/inhaler.html'
 
@@ -48,7 +45,7 @@ class PollutionView(TemplateView):
 
 
 # TODO @Anna -  Finish the code for this view section - need to change the tempalte view
-class SettingsView(LoginRequiredMixin, UpdateView):
+class SettingsView(LoginRequiredMixin ,UpdateView):
     template_name = 'clear/main/settings.html'
     user_form = SettingsForm
     def get(self, request):
@@ -61,69 +58,51 @@ class SettingsView(LoginRequiredMixin, UpdateView):
         user = get_object_or_404(AppUser, id = request.user.id)
         form_class = SettingsForm(request.POST,instance = user)
         if form_class.is_valid():
-            print("")
             form_class.save()
             inhaler_id = request.POST.getlist('inhaler_id')
             inhaler_type = request.POST.getlist('inhaler_type')
             puff_remaining = request.POST.getlist('puff_remaining')
             puffs = request.POST.getlist('puffs')
             per_day = request.POST.getlist('per_day')
-            if inhaler_type and puff_remaining and per_day:
-                all_user_inhalers = [{
-                    'inhaler_id': inhaler_id,
-                    "type": type,
-                    "puff_remaining": puff_remaining,
-                    "per_day": per_day,
-                }
-                    for inhaler_id, type, puff_remaining, per_day in
-                    zip(inhaler_id, inhaler_type, puff_remaining, per_day)]
+            if inhaler_type and puff_remaining and puffs and per_day:
+                all_user_inhalers=[ {'inahler_id':inahler_id,"type":type,"puff_remaining":puff_remaining,"puffs":puffs,"per_day":per_day} for inahler_id,type,puff_remaining,puffs,per_day in zip(inhaler_id,inhaler_type,puff_remaining,puffs,per_day)]
                 for i in all_user_inhalers:
-                    obj = get_object_or_404(UserInhaler, id=i['inhaler_id'])
-                    obj.inhaler_type = i['type']
-                    obj.puffs_per_day = i['per_day']
+                    obj = get_object_or_404(Inhalers,id = i['inahler_id'])
+                    obj.inhaler_type    = i['type']
+                    obj.per_Day         = i['per_day']
                     obj.puffs_remaining = i['puff_remaining']
+                    obj.puffs           = i['puffs']
                     obj.save()
-                messages.warning(request, 'User settings has been updated successfully')
+                messages.warning(request,'User settings has been updated successfully')
                 return redirect('settings')
-            messages.warning(request, 'User settings has been updated successfully')
-            return redirect('settings')
 
         else:
-            messages.error(request, 'Please fill in all required fields')
+            messages.error(request,'Please fill in all required fields')
             return redirect('settings')
 
 
 def add_inhaler(request):
     user = request.user
     inhaler_type = request.POST.get('inhaler_type')
-    puff_remaining = request.POST.get('Puffs_Remaining')
-    per_day = request.POST.get('Per_Day')
-    if inhaler_type and puff_remaining and per_day:
-        obj = UserInhaler.objects.create(
-            user_id=user,
-            inhaler_type=inhaler_type,
-            puffs_remaining=puff_remaining,
-            puffs_per_day=per_day,
+    puff_remaining = request.POST.get('puff_remaining')
+    puffs = request.POST.get('puffs')
+    per_day = request.POST.get('per_day')
+    if inhaler_type and puff_remaining and puffs and per_day:
+        obj = Inhalers.objects.create(
+            user = user,
+            inhaler_type = inhaler_type,
+            puffs_remaining = puff_remaining,
+            puffs = puffs,
+            per_Day = per_day
         )
         obj.save()
-        messages.success(request, 'Inhaler has been added successfully')
+        messages.success(request,'Inhaler has been added successfully')
         return redirect('settings')
-
-    messages.error(request, 'Please fill in all required fields')
-    return redirect('settings')
-
-
-def delete_inhaler(request, *args, **kwargs):
-    id = kwargs.get('id')
-    obj = get_object_or_404(UserInhaler, id=id)
-    obj.delete()
-    messages.warning(request, "Inhaler has been deleted successfully.")
-    return redirect("settings")
+    else:
+        messages.error(request,'Please fill in all required fields')
+        return redirect('settings')
 
 def logInhalerPuff(request, user_inhaler_id):
     # you should update you model field here
-    if UserInhaler.log_puff(user_inhaler_id) is not None:
-        return redirect(reverse_lazy('inhalers'))
-    messages.warning(request,"Inhaler cannot be logged any more.")
-    return redirect("inhalers")
-
+    UserInhaler.log_puff(user_inhaler_id)
+    return redirect(reverse_lazy('inhalers'))

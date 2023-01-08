@@ -28,7 +28,11 @@ urlpatterns = [
 
     path('inhalers/', views.UserInhalerView.as_view(), name='inhalers'),
     path('inhaler/log_puff/<int:user_inhaler_id>', views.logInhalerPuff, name='inhaler_log_puff'),
+    path('inhalers/<int:user_id>/', views.currentUser, name='inhaler_current_user'),
     path('pollution/', views.PollutionView.as_view(), name='pollution'),
+
+    # TODO FIX
+    path('pollution/set_current_location/<int:app_user_id>', views.logCurrentLocation, name='pollution_log_location'),
     path('settings/', views.SettingsView.as_view(), name='settings')
 
     # TODO Everyone add their views like above
