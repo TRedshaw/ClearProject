@@ -121,34 +121,58 @@ class Inhaler(models.Model):
 
 
 class UserInhaler(models.Model):
+    # Adding inhaler type to the inhaler page so user can know which inhaler they are tracking
+    inhaler_type = (
+        ('Beclametasone_dipropionate', 'Beclametasone dipropionate'),
+        ('Ciclesonide', 'Ciclesonide'),
+        ('Fluticasone_poprionate', 'Fluticasone poprionate'),
+        ('Beclometasone', 'Beclometasone'),
+        ('Budesonide', 'Budesonide'),
+        ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
+        ('Mometasone', 'Mometasone'),
+        ('Beclometasone_dipropionate_with_ormoterol', 'Beclometasone_dipropionate_with_ormoterol'),
+        ('Budesonid_with_formoterol', 'Budesonid_with_formoterol'),
+        ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
+        ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
+        ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
+    )
     # models.PROTECT works so if a user tries to delete an 'Inhaler' record (the one in quotations) then it wont let you
     # models.CASCADE will delete all related UserInhalers if a UserProfile (user) is deleted
 
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inhalers_user', null=False)
-    inhaler_id = models.ForeignKey('Inhaler', on_delete=models.PROTECT, related_name='users_inhaler', null=False)
+    # inhaler_id = models.ForeignKey('Inhaler', on_delete=models.PROTECT, related_name='users_inhaler', null=False)
+    inhaler_type = models.CharField(max_length=200, choices=inhaler_type)
     puffs_today = models.IntegerField(default=0)
     puffs_remaining = models.IntegerField(null=False)
+    puffs_per_day = models.IntegerField(null=True, blank=True)
 
-    dose = models.IntegerField(help_text='Dose in micrograms')
-    puffs = models.IntegerField(help_text='Number of puffs per usage')
-    frequency = models.IntegerField(help_text='Number of uses per day')
-
+    dose = models.IntegerField(help_text='Dose in micrograms', null=True, blank=True)
+    puffs = models.IntegerField(help_text='Number of puffs per usage', null=True, blank=True)
+    frequency = models.IntegerField(help_text='Number of uses per day',default=0)
+    updated_at = models.DateTimeField(auto_now=True)  # attributes time
     class Meta:
         verbose_name = 'User Inhaler'
         verbose_name_plural = 'Users Inhalers'
         ordering = ['id']
 
     def __str__(self):
-        return_string = str(self.user_id) + " with " + str(self.inhaler_id)
+        return_string = str(self.user_id) + " with " + str(self.inhaler_type)
         return return_string
+    def get_readable_type(self):
+        return self.inhaler_type.replace('_', ' ')
 
     def add_inhaler(self):
         # TODO Complete
         pass
 
-    def edit_inhaler(self):
-        # TODO Complete
-        pass
+    # To reset puffs today to zero every day:
+    def get_puffs_today(self):
+        today_date = datetime.date.today()
+        # today_date = '2023-01-09'
+        if self.updated_at.strftime('%Y-%m-%d') != str(today_date):
+            self.puffs_today = 0
+            self.save()
+
 
     def delete_inhaler(self):
         # TODO Complete
@@ -157,10 +181,13 @@ class UserInhaler(models.Model):
 
     def log_puff(user_inhaler_id):
         user_inhaler = UserInhaler.objects.get(pk=user_inhaler_id)
-        user_inhaler.puffs_today += 1  # change field
-        user_inhaler.puffs_remaining -= 1
-        user_inhaler.save()  # this will update only
+        if user_inhaler.puffs_remaining > 0:
+            user_inhaler.puffs_today += 1  # change field
+            user_inhaler.puffs_remaining -= 1
 
+            user_inhaler.save()  # this will update only
+            return 1
+        return None
 class Inhalers(models.Model):
     inhaler_type = (
         ('Beclametasone_dipropionate', 'Beclametasone_dipropionate'),
