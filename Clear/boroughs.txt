@@ -1,0 +1,30 @@
+barnet Barnet
+brent Brent
+bromley Bromley
+camden Camden
+cityoflondon City of London
+croydon Croydon
+ealing Ealing
+enfield Enfield
+greenwich Greenwich
+hackney Hackney
+hammersmithandfulham Hammersmith and Fulham
+haringey Haringey
+hounslow Hounslow
+islington Islington
+kensingtonandchelsea Kensington and Chelsea
+lambeth Lambeth
+lewisham Lewisham
+merton Merton
+newham Newham
+redbridge Redbridge
+richmond Richmond
+southwark Southwark
+towerhamlets Tower Hamlets
+walthamforest Waltham Forest
+wandsworth Wandsworth
+westminster Westminster
+
+
+
+

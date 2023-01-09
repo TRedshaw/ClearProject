@@ -5,9 +5,10 @@
 
 {% block content %}
 
+    {% load static %}
     <head>
         <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
-        <link rel="stylesheet" href="pollution.css" />
+{#        <link rel="stylesheet" href="{% static 'pollution.css' %}" />#}
         <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
     </head>
 
@@ -20,28 +21,53 @@
 
         <div style="padding: 0px 100px 30px 100px">
             <div class="row">
-                <div class="col-8 test2" style="padding-right: 45px">
+                <div class="col-8" style="padding-right: 45px">
                     <div class="row justify-content-center">
                         <h2 class="display-4" >Map of London</h2>
                     </div>
                     <div id='map' width="100%" style='height:600px'></div>
                 </div>
 
-                <div class="col-4 test1">
+                <div class="col-4">
                     <div class="row justify-content-center">
                         <h2 class="display-4" >Warnings</h2>
                     </div>
+
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                         Current Location
                         </button>
 
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Hammersmith & Fulham</a>
-                            <a class="dropdown-item" href="#">Kensington & Chelsea</a>
+                        <div class="dropdown-menu pre-scrollable" id="demolist" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/clear/pollution/{{UserInhaler.id}}">Barnet</a>
+                            <a class="dropdown-item" href="#">Brent</a>
+                            <a class="dropdown-item" href="#">Bromley</a>
+                            <a class="dropdown-item" href="#">Camden</a>
+                            <a class="dropdown-item" href="#">City of London</a>
+                            <a class="dropdown-item" href="#">Croydon</a>
+                            <a class="dropdown-item" href="#">Ealing</a>
+                            <a class="dropdown-item" href="#">Enfield</a>
+                            <a class="dropdown-item" href="#">Greenwich</a>
+                            <a class="dropdown-item" href="#">Hackney</a>
+                            <a class="dropdown-item" href="#">Hammersmith and Fulham</a>
+                            <a class="dropdown-item" href="#">Haringey</a>
+                            <a class="dropdown-item" href="#">Hounslow</a>
+                            <a class="dropdown-item" href="#">Islignton</a>
+                            <a class="dropdown-item" href="#">Kensington and Chelsea</a>
+                            <a class="dropdown-item" href="#">Lambeth</a>
+                            <a class="dropdown-item" href="#">Lewisham</a>
+                            <a class="dropdown-item" href="#">Merton</a>
+                            <a class="dropdown-item" href="#">Newham</a>
+                            <a class="dropdown-item" href="#">Redbridge</a>
+                            <a class="dropdown-item" href="#">Richmond</a>
+                            <a class="dropdown-item" href="#">Southwark</a>
+                            <a class="dropdown-item" href="#">Tower Hamlets</a>
+                            <a class="dropdown-item" href="#">Waltham Forest</a>
+                            <a class="dropdown-item" href="#">Wandsworth</a>
+                            <a class="dropdown-item" href="#">Westminster</a>
                         </div>
                     </div>
-    {#           TODO FIX#}
+                    {#           TODO FIX#}
 {#                   <form enctype="multipart/form-data" method="post" action="/clear/pollution/set_current_location/1">#}
 {#                        {% csrf_token %}#}
 {#                        <button type="submit" class="btn btn-primary">Log Location</button>#}
@@ -90,6 +116,16 @@
                     });
                     });
         </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+          $(document).ready(function () {
+            $('#demolist a').on('click', function () {
+              var borough_option= ($(this).text());
+            });
+          });
+        </script>
+
     <body>
 {% endblock content %}
 
