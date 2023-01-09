@@ -34,7 +34,7 @@ urlpatterns = [
     path('pollution/set_current_location/<int:app_user_id>', views.logCurrentLocation, name='pollution_log_location'),
     path('settings/', views.SettingsView.as_view(), name='settings'),
     path('add_inhaler/', views.add_inhaler, name='add_inhaler'),
-    path('delete_inhaler/<int:id>/',views.delete_inhaler,name="delete_inaler")
+    path('delete_inhaler/<int:id>/',views.delete_inhaler,name="delete_inhaler")
     # TODO Everyone add their views like above
     # https://docs.djangoproject.com/en/4.1/topics/class-based-views/intro/
 ]
