@@ -27,7 +27,6 @@
 
             {% for UserInhaler in object_list %}
             {{UserInhaler.get_puffs_today}}
-
                 <div class="card mb-4">
                     <div class="card-header">
                         Inhaler: {{UserInhaler.get_readable_type}}
