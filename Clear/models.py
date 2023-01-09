@@ -16,6 +16,11 @@ class AppUser(AbstractUser):
     pollution_limit = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     consent = models.BooleanField()
 
+
+    home_postcode = models.CharField(max_length=25)
+    work_postcode = models.CharField(max_length=25,null=True,blank=True)
+    other_postcode = models.CharField(max_length=25,null=True,blank=True)
+
     REQUIRED_FIELDS = ['dob', 'pollution_limit', 'consent']
 
     class Meta:
@@ -122,7 +127,7 @@ class Inhaler(models.Model):
 
 class UserInhaler(models.Model):
     # Adding inhaler type to the inhaler page so user can know which inhaler they are tracking
-    inhaler_type = (
+    inhaler_type = [
         ('Beclametasone_dipropionate', 'Beclametasone dipropionate'),
         ('Ciclesonide', 'Ciclesonide'),
         ('Fluticasone_poprionate', 'Fluticasone poprionate'),
@@ -135,7 +140,7 @@ class UserInhaler(models.Model):
         ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
         ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
         ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
-    )
+    ]
     # models.PROTECT works so if a user tries to delete an 'Inhaler' record (the one in quotations) then it wont let you
     # models.CASCADE will delete all related UserInhalers if a UserProfile (user) is deleted
 
@@ -168,7 +173,7 @@ class UserInhaler(models.Model):
     # To reset puffs today to zero every day:
     def get_puffs_today(self):
         today_date = datetime.date.today()
-        # today_date = '2023-01-09'
+        # today_date = '2023-01-10'
         if self.updated_at.strftime('%Y-%m-%d') != str(today_date):
             self.puffs_today = 0
             self.save()
@@ -189,7 +194,7 @@ class UserInhaler(models.Model):
             return 1
         return None
 class Inhalers(models.Model):
-    inhaler_type = (
+    inhaler_type = [
         ('Beclametasone_dipropionate', 'Beclametasone_dipropionate'),
         ('Ciclesonide', 'Ciclesonide'),
         ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
@@ -202,7 +207,7 @@ class Inhalers(models.Model):
         ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
         ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
         ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
-    )
+    ]
 
     remaing_puff_choice = (
         ('10', '10'),
@@ -277,9 +282,8 @@ class PollutionLevels(models.Model):
         pass
 
 class Boroughs(models.Model):
-
-OutwardName = models.CharField(max_length=128)
-ApiName = models.CharField(max_length=128)
+    OutwardName = models.CharField(max_length=128)
+    ApiName = models.CharField(max_length=128)
 
 class Meta:
     verbose_name = 'Boroughs'

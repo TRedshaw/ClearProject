@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, CreateView
 from Clear.forms import RegisterForm, SettingsForm
-from Clear.models import AppUser, UserInhaler ,Inhaler,Inhalers
+from Clear.models import AppUser, UserInhaler ,Inhaler, Inhalers
 from django.shortcuts import get_object_or_404
 # from django.views import View
 from django.views.generic import View
@@ -51,9 +51,10 @@ class PollutionView(TemplateView):
 class SettingsView(LoginRequiredMixin, UpdateView):
     template_name = 'clear/main/settings.html'
     user_form = SettingsForm
+
     def get(self, request):
         user = get_object_or_404(AppUser, id = request.user.id)
-        inhalers = Inhalers.objects.filter(user = request.user)
+        inhalers = UserInhaler.objects.filter(user_id = request.user)
         user_form = self.user_form(instance = user)
         return render(request, self.template_name, context= {"form":user_form,"inhalers":inhalers})
 
@@ -61,36 +62,35 @@ class SettingsView(LoginRequiredMixin, UpdateView):
         user = get_object_or_404(AppUser, id = request.user.id)
         form_class = SettingsForm(request.POST,instance = user)
         if form_class.is_valid():
-            print("")
+            print(request.POST)
             form_class.save()
-            inhaler_id = request.POST.getlist('inhaler_id')
+            inhaler_id = request.POST.getlist('inhalerid')
             inhaler_type = request.POST.getlist('inhaler_type')
             puff_remaining = request.POST.getlist('puff_remaining')
-            puffs = request.POST.getlist('puffs')
             per_day = request.POST.getlist('per_day')
-            if inhaler_type and puff_remaining and per_day:
-                all_user_inhalers = [{
-                    'inhaler_id': inhaler_id,
-                    "type": type,
-                    "puff_remaining": puff_remaining,
-                    "per_day": per_day,
+            if inhaler_type and puff_remaining  and per_day:
+                all_user_inhalers=[ {
+                'inahler_id':inahler_id,
+                "type":type,
+                "puff_remaining":puff_remaining,
+                "per_day":per_day,
                 }
-                    for inhaler_id, type, puff_remaining, per_day in
-                    zip(inhaler_id, inhaler_type, puff_remaining, per_day)]
+                for inahler_id,type,puff_remaining,per_day in zip(inhaler_id,inhaler_type,puff_remaining,per_day)]
                 for i in all_user_inhalers:
-                    obj = get_object_or_404(UserInhaler, id=i['inhaler_id'])
-                    obj.inhaler_type = i['type']
-                    obj.puffs_per_day = i['per_day']
+                    obj = get_object_or_404(UserInhaler,id =i['inahler_id'])
+                    obj.inhaler_type    = i['type']
+                    obj.puffs_per_day   = i['per_day']
                     obj.puffs_remaining = i['puff_remaining']
                     obj.save()
-                messages.warning(request, 'User settings has been updated successfully')
+                messages.warning(request,'User settings has been updated successfully')
                 return redirect('settings')
-            messages.warning(request, 'User settings has been updated successfully')
+            messages.warning(request,'User settings has been updated successfully')
             return redirect('settings')
 
         else:
-            messages.error(request, 'Please fill in all required fields')
+            messages.error(request,'Please fill in all required fields')
             return redirect('settings')
+
 
 
 def add_inhaler(request):

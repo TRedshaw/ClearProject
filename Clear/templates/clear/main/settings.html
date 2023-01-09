@@ -1,3 +1,4 @@
+
 {% extends "clear/main/base.html" %}
 
 {% block extra_css %}
@@ -52,84 +53,58 @@
                 <div class="col-lg-6">
 					{% if inhalers %}
 					{% for inhaler in inhalers %}
-					<input type="hidden" name="inhaler_id" value="{{inhaler.id}}">
-					<div class="from-group">
-						{% if forloop.counter  == 1 %}
-						<label for="main_inheler" class="">Main Inhaler Type</label>
-						{% else %}
-						<label for="main_inheler" class="">Secondary Inhaler Type</label>
-						{% endif %}
-						<select class="form-control form-control-sm" name="inhaler_type"  id="main_inheler">
-							<option value="Beclametasone_dipropionate"{% if inhaler.inhaler_type == 'Beclametasone_dipropionate' %}selected{% endif %}>Beclametasone dipropionate (pMDI)</option>
+					<div class="card mb-3 " style="border-radius: 1em;">
+						<div class="card-body">
+							<div class="d-flex justify-content-end" style="margin-bottom: -20px;" >
+								<a class="btn btn-sm btn-danger" href="{% url 'delete_inhaler' inhaler.id%}">
+								Delete Inhaler
+							    </a>
+							</div>
+							<input type="hidden" name="inhalerid" value="{{inhaler.id}}">
+							<div class="from-group">
+								{% if forloop.counter  == 1 %}
+								<label for="main_inheler" class="">Main Inhaler Type</label>
+								{% else %}
+								<label for="main_inheler" class="">Secondary Inhaler Type</label>
+								{% endif %}
+								<select class="form-control form-control-sm" name="inhaler_type"  id="main_inheler">
+									<option value="Beclametasone_dipropionate"{% if inhaler.inhaler_type == 'Beclametasone_dipropionate' %}selected{% endif %}>Beclametasone dipropionate (pMDI)</option>
 
-							<option value="Ciclesonide"{% if inhaler.inhaler_type == 'Ciclesonide' %}selected{% endif %}>Ciclesonide (pMDI)</option>
+									<option value="Ciclesonide"{% if inhaler.inhaler_type == 'Ciclesonide' %}selected{% endif %}>Ciclesonide (pMDI)</option>
 
-							<option value="Fluticasone_poprionate"{% if inhaler.inhaler_type == 'Fluticasone_poprionate' %}selected{% endif %}>Fluticasone poprionate(pMDI)</option>
+									<option value="Fluticasone_poprionate"{% if inhaler.inhaler_type == 'Fluticasone_poprionate' %}selected{% endif %}>Fluticasone poprionate(pMDI)</option>
 
-							<option value="Beclometasone"{% if inhaler.inhaler_type == 'Beclometasone' %}selected{% endif %}>Beclometasone(DPI)</option>
+									<option value="Beclometasone"{% if inhaler.inhaler_type == 'Beclometasone' %}selected{% endif %}>Beclometasone(DPI)</option>
 
-							<option value="Budesonide"{% if inhaler.inhaler_type == 'Budesonide' %}selected{% endif %}>Budesonide (DPI)</option>
+									<option value="Budesonide"{% if inhaler.inhaler_type == 'Budesonide' %}selected{% endif %}>Budesonide (DPI)</option>
 
-							<option value="Fluticasone_poprionate"{% if inhaler.inhaler_type == 'Fluticasone_poprionate' %}selected{% endif %}>Fluticasone poprionate(DPI)</option>
+									<option value="Fluticasone_poprionate"{% if inhaler.inhaler_type == 'Fluticasone_poprionate' %}selected{% endif %}>Fluticasone poprionate(DPI)</option>
 
-							<option value="Mometasone"{% if inhaler.inhaler_type == 'Mometasone' %}selected{% endif %}>Mometasone (DPI)</option>
+									<option value="Mometasone"{% if inhaler.inhaler_type == 'Mometasone' %}selected{% endif %}>Mometasone (DPI)</option>
 
-							<option value="Beclometasone_dipropionate_with_ormoterol"{% if inhaler.inhaler_type == 'Beclometasone_dipropionate_with_ormoterol' %}selected{% endif %}>Beclometasone dipropionate with formoterol</option>
+									<option value="Beclometasone_dipropionate_with_ormoterol"{% if inhaler.inhaler_type == 'Beclometasone_dipropionate_with_ormoterol' %}selected{% endif %}>Beclometasone dipropionate with formoterol</option>
 
-							<option value="Budesonid_with_formoterol"{% if inhaler.inhaler_type == 'Budesonid_with_formoterol' %}selected{% endif %}>Budesonid with formoterol</option>
+									<option value="Budesonid_with_formoterol"{% if inhaler.inhaler_type == 'Budesonid_with_formoterol' %}selected{% endif %}>Budesonid with formoterol</option>
 
-							<option value="Fluticasone_poprionate_with_formoterol"{% if inhaler.inhaler_type == 'Fluticasone_poprionate_with_formoterol' %}selected{% endif %}>Fluticasone poprionate with formoterol</option>
+									<option value="Fluticasone_poprionate_with_formoterol"{% if inhaler.inhaler_type == 'Fluticasone_poprionate_with_formoterol' %}selected{% endif %}>Fluticasone poprionate with formoterol</option>
 
-							<option value="Fluticasone_poprionate_with_salmeterol"{% if inhaler.inhaler_type == 'Fluticasone_poprionate_with_salmeterol' %}selected{% endif %}>Fluticasone poprionate with salmeterol</option>
+									<option value="Fluticasone_poprionate_with_salmeterol"{% if inhaler.inhaler_type == 'Fluticasone_poprionate_with_salmeterol' %}selected{% endif %}>Fluticasone poprionate with salmeterol</option>
 
-							<option value="Fluticasone_furoate_with_vilanterol"{% if inhaler.inhaler_type == 'Fluticasone_furoate_with_vilanterol' %}selected{% endif %}>Fluticasone furoate with vilanterol</option>
-						</select>
+									<option value="Fluticasone_furoate_with_vilanterol"{% if inhaler.inhaler_type == 'Fluticasone_furoate_with_vilanterol' %}selected{% endif %}>Fluticasone furoate with vilanterol</option>
+								</select>
+							</div>
+							<div class="from-group">
+								<label for="Per_Day" class="">Puffs Per Day</label>
+								<input type="number" class="form-control form-control-sm" name="per_day" id="Per_Day" value="{{inhaler.puffs_per_day}}" placeholder="Per Day">
+							</div>
+							<div class="from-group">
+								<label for="Puffs_Remaining " class="">Puffs Remaining </label>
+								<input type="number" class="form-control form-control-sm" name="puff_remaining" id="Puffs_Remaining" value="{{inhaler.puffs_remaining}}" placeholder="Puffs Remaining">
+							</div>
+
+						</div>
 					</div>
-					<div class="from-group">
-						<label for="Puffs_Remaining " class="">Puffs Remaining </label>
-						<select class="form-control form-control-sm" name="puff_remaining" id="Puffs_Remaining">
-							<option value="10" {% if inhaler.puffs_remaining == '10'%} selected {% endif %}>10</option>
-							<option value="20" {% if inhaler.puffs_remaining == '20'%} selected {% endif %}>20</option>
-							<option value="30" {% if inhaler.puffs_remaining == '30'%} selected {% endif %}>30</option>
-							<option value="40" {% if inhaler.puffs_remaining == '40'%} selected {% endif %}>40</option>
-							<option value="50" {% if inhaler.puffs_remaining == '50'%} selected {% endif %}>50</option>
-							<option value="60" {% if inhaler.puffs_remaining == '60'%} selected {% endif %}>60</option>
-							<option value="70" {% if inhaler.puffs_remaining == '70'%} selected {% endif %}>70</option>
-							<option value="80" {% if inhaler.puffs_remaining == '80'%} selected {% endif %}>80</option>
-							<option value="90" {% if inhaler.puffs_remaining == '90'%} selected {% endif %}>90</option>
-							<option value="100" {% if inhaler.puffs_remaining == '100'%} selected {% endif %}>100</option>
-						</select>
-					</div>
-					<div class="from-group">
-						<label for="Puffs" class="">Puffs </label>
-						<select class="form-control form-control-sm" name="puffs" id="Puffs">
-							<option value="1" {% if inhaler.puffs == '1'%} selected {% endif %}>1</option>
-							<option value="2" {% if inhaler.puffs == '2'%} selected {% endif %}>2</option>
-							<option value="3" {% if inhaler.puffs == '3'%} selected {% endif %}>3</option>
-							<option value="4" {% if inhaler.puffs == '4'%} selected {% endif %}>4</option>
-							<option value="5" {% if inhaler.puffs == '5'%} selected {% endif %}>5</option>
-							<option value="6" {% if inhaler.puffs == '6'%} selected {% endif %}>6</option>
-							<option value="7" {% if inhaler.puffs == '7'%} selected {% endif %}>7</option>
-							<option value="8" {% if inhaler.puffs == '8'%} selected {% endif %}>8</option>
-							<option value="9" {% if inhaler.puffs == '9'%} selected {% endif %}>9</option>
-							<option value="10"{% if inhaler.puffs == '10'%} selected {% endif %}>10</option>
-						</select>
-					</div>
-					<div class="from-group">
-						<label for="Per_Day" class="">Per Day</label>
-						<select class="form-control form-control-sm mr-3" name="per_day" id="Per_Day">
-							<option value="1" {% if inhaler.per_Day == '1'%} selected {% endif %}>1</option>
-							<option value="2" {% if inhaler.per_Day == '2'%} selected {% endif %}>2</option>
-							<option value="3" {% if inhaler.per_Day == '3'%} selected {% endif %}>3</option>
-							<option value="4" {% if inhaler.per_Day == '4'%} selected {% endif %}>4</option>
-							<option value="5" {% if inhaler.per_Day == '5'%} selected {% endif %}>5</option>
-							<option value="6" {% if inhaler.per_Day == '6'%} selected {% endif %}>6</option>
-							<option value="7" {% if inhaler.per_Day == '7'%} selected {% endif %}>7</option>
-							<option value="8" {% if inhaler.per_Day == '8'%} selected {% endif %}>8</option>
-							<option value="9" {% if inhaler.per_Day == '9'%} selected {% endif %}>9</option>
-							<option value="10"{% if inhaler.per_Day == '10'%} selected {% endif %}>10</option>
-						</select>
-					</div>
+
 					{% endfor %}
 					{% endif %}
 					<div class="d-flex justify-content-end mt-3" >
@@ -175,51 +150,20 @@
 						<option value="Fluticasone_furoate_with_vilanterol">Fluticasone furoate with vilanterol</option>
 					</select>
 				</div>
+				<div class="from-group">
+					<label for="Per_Day" class=""> Puffs Per Day</label>
+					<input type="number" class="form-control form-control-sm" name="Per_Day" id="Per_Day"  placeholder="Per Day">
+				</div>
 				<div class="from-group mb-1">
 					<label for="Puffs_Remaining " class="">Puffs Remaining </label>
-					<select class="form-control  form-control-sm" name="puff_remaining" id="Puffs_Remaining">
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="30">30</option>
-						<option value="40">40</option>
-						<option value="50">50</option>
-						<option value="60">60</option>
-						<option value="70">70</option>
-						<option value="80">80</option>
-						<option value="90">90</option>
-						<option value="100">100</option>
-					</select>
+					<input type="number" class="form-control form-control-sm" name="Puffs_Remaining" id="Puffs_Remaining"  placeholder="Puffs Remaining">
 				</div>
-				<div class="from-group mb-1">
-					<label for="Puffs" class="">Puffs </label>
-					<select class="form-control  form-control-sm" name="puffs" id="Puffs">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-					</select>
-				</div>
-				<div class="from-group">
-					<label for="Per_Day" class="">Per Day</label>
-					<select class="form-control  form-control-sm" name="per_day" id="Per_Day">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-					</select>
-				</div>
+
+				
+				
+
+
+
 
 
 		</div>
