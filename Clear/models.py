@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime
+import os
 
 from django.http import request
 
@@ -27,10 +28,10 @@ class AppUser(AbstractUser):
         return self.username
 
     # TODO FIX
-    def set_new_current_location(self):
-        current_location = AppUser.objects.get(pk=id)
-        current_location.current_location_id = 1  # change field
-        current_location.save()  # this will update only
+    # def set_new_current_location(self):
+    #     # lower case & upper case
+    #     location = borough_option.strip().lower()
+    #     pass
 
     def quick_set_current_location(self):
         # TODO For when they choose just work or other or home it gives them the pollution level by clicking
@@ -93,6 +94,27 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name
+
+    location = (
+        ('greenwich', 'Greenwich'),
+        ('hackney', 'Hackney'),
+        ('hammersmithandfulham', 'Hammersmith and Fulham'),
+        ('haringey', 'Haringey'),
+        ('hounslow', 'Hounslow'),
+        ('islington', 'Kensington and Chelsea'),
+        ('kensingtonandchelsea', 'Greenwich'),
+        ('lambeth', 'Lambeth'),
+        ('lewisham', 'Lewisham'),
+        ('merton', 'Merton'),
+        ('newham', 'Newham'),
+        ('redbridge', 'Redbridge'),
+        ('richmond', 'Richmond'),
+        ('southwark', 'Southwark'),
+        ('towerhamlets', 'Tower Hamlets'),
+        ('walthamforest', 'Waltham Forest'),
+        ('wandsworth', 'Wandsworth'),
+        ('westminster', 'Westminster'),
+    )
 
 
 class Inhaler(models.Model):
@@ -202,7 +224,6 @@ class Inhalers(models.Model):
         ('10','10'),
     )
 
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inhaler_user', null=False)
     inhaler_type = models.CharField(max_length=200, choices=inhaler_type)
     puffs_remaining = models.CharField(max_length=20, choices=remaing_puff_choice)
@@ -249,17 +270,8 @@ class PollutionLevels(models.Model):
         #  pollution levels to true
         pass
 
-class Boroughs(models.Model):
 
-OutwardName = models.CharField(max_length=128)
-ApiName = models.CharField(max_length=128)
-
-class Meta:
-    verbose_name = 'Boroughs'
-    verbose_name_plural = 'Boroughs'
-    ordering = ['ApiName']
-
-def __str__(self):
-    return self.OutwardName
-
-
+#
+# def updateTables(borough,self):
+#     updatepollution levels(location_lowercase)
+#     # pollution levels all rows where flag is true check the pollution level info advice for all those rows
