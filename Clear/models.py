@@ -16,6 +16,11 @@ class AppUser(AbstractUser):
     pollution_limit = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     consent = models.BooleanField()
 
+
+    home_postcode = models.CharField(max_length=25)
+    work_postcode = models.CharField(max_length=25,null=True,blank=True)
+    other_postcode = models.CharField(max_length=25,null=True,blank=True)
+
     REQUIRED_FIELDS = ['dob', 'pollution_limit', 'consent']
 
     class Meta:
@@ -168,7 +173,7 @@ class UserInhaler(models.Model):
     # To reset puffs today to zero every day:
     def get_puffs_today(self):
         today_date = datetime.date.today()
-        # today_date = '2023-01-09'
+        # today_date = '2023-01-10'
         if self.updated_at.strftime('%Y-%m-%d') != str(today_date):
             self.puffs_today = 0
             self.save()
