@@ -189,7 +189,7 @@ class UserInhaler(models.Model):
             return 1
         return None
 class Inhalers(models.Model):
-    inhaler_type = (
+    inhaler_type = [
         ('Beclametasone_dipropionate', 'Beclametasone_dipropionate'),
         ('Ciclesonide', 'Ciclesonide'),
         ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
@@ -202,7 +202,7 @@ class Inhalers(models.Model):
         ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
         ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
         ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
-    )
+    ]
 
     remaing_puff_choice = (
         ('10', '10'),

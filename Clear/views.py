@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, CreateView
 from Clear.forms import RegisterForm, SettingsForm
-from Clear.models import AppUser, UserInhaler ,Inhaler,Inhalers
+from Clear.models import AppUser, UserInhaler ,Inhaler
 from django.shortcuts import get_object_or_404
 # from django.views import View
 from django.views.generic import View
