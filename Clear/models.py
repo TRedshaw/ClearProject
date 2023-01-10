@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import datetime
+import os
 
 from django.http import request
 
@@ -27,10 +28,10 @@ class AppUser(AbstractUser):
         return self.username
 
     # TODO FIX
-    def set_new_current_location(self):
-        current_location = AppUser.objects.get(pk=id)
-        current_location.current_location_id = 1  # change field
-        current_location.save()  # this will update only
+    # def set_new_current_location(self):
+    #     # lower case & upper case
+    #     location = borough_option.strip().lower()
+    #     pass
 
     def quick_set_current_location(self):
         # TODO For when they choose just work or other or home it gives them the pollution level by clicking
@@ -94,6 +95,27 @@ class Location(models.Model):
     def __str__(self):
         return self.name
 
+    location = (
+        ('greenwich', 'Greenwich'),
+        ('hackney', 'Hackney'),
+        ('hammersmithandfulham', 'Hammersmith and Fulham'),
+        ('haringey', 'Haringey'),
+        ('hounslow', 'Hounslow'),
+        ('islington', 'Kensington and Chelsea'),
+        ('kensingtonandchelsea', 'Greenwich'),
+        ('lambeth', 'Lambeth'),
+        ('lewisham', 'Lewisham'),
+        ('merton', 'Merton'),
+        ('newham', 'Newham'),
+        ('redbridge', 'Redbridge'),
+        ('richmond', 'Richmond'),
+        ('southwark', 'Southwark'),
+        ('towerhamlets', 'Tower Hamlets'),
+        ('walthamforest', 'Waltham Forest'),
+        ('wandsworth', 'Wandsworth'),
+        ('westminster', 'Westminster'),
+    )
+
 
 class Inhaler(models.Model):
     name = models.CharField(max_length=12)
@@ -140,39 +162,30 @@ class UserInhaler(models.Model):
     # models.CASCADE will delete all related UserInhalers if a UserProfile (user) is deleted
 
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inhalers_user', null=False)
-    # inhaler_id = models.ForeignKey('Inhaler', on_delete=models.PROTECT, related_name='users_inhaler', null=False)
-    inhaler_type = models.CharField(max_length=200, choices=inhaler_type)
+    inhaler_id = models.ForeignKey('Inhaler', on_delete=models.PROTECT, related_name='users_inhaler', null=False)
     puffs_today = models.IntegerField(default=0)
     puffs_remaining = models.IntegerField(null=False)
-    puffs_per_day = models.IntegerField(null=True, blank=True)
 
-    dose = models.IntegerField(help_text='Dose in micrograms', null=True, blank=True)
-    puffs = models.IntegerField(help_text='Number of puffs per usage', null=True, blank=True)
-    frequency = models.IntegerField(help_text='Number of uses per day',default=0)
-    updated_at = models.DateTimeField(auto_now=True)  # attributes time
+    dose = models.IntegerField(help_text='Dose in micrograms')
+    puffs = models.IntegerField(help_text='Number of puffs per usage')
+    frequency = models.IntegerField(help_text='Number of uses per day')
+
     class Meta:
         verbose_name = 'User Inhaler'
         verbose_name_plural = 'Users Inhalers'
         ordering = ['id']
 
     def __str__(self):
-        return_string = str(self.user_id) + " with " + str(self.inhaler_type)
+        return_string = str(self.user_id) + " with " + str(self.inhaler_id)
         return return_string
-    def get_readable_type(self):
-        return self.inhaler_type.replace('_', ' ')
 
     def add_inhaler(self):
         # TODO Complete
         pass
 
-    # To reset puffs today to zero every day:
-    def get_puffs_today(self):
-        today_date = datetime.date.today()
-        # today_date = '2023-01-09'
-        if self.updated_at.strftime('%Y-%m-%d') != str(today_date):
-            self.puffs_today = 0
-            self.save()
-
+    def edit_inhaler(self):
+        # TODO Complete
+        pass
 
     def delete_inhaler(self):
         # TODO Complete
@@ -181,13 +194,10 @@ class UserInhaler(models.Model):
 
     def log_puff(user_inhaler_id):
         user_inhaler = UserInhaler.objects.get(pk=user_inhaler_id)
-        if user_inhaler.puffs_remaining > 0:
-            user_inhaler.puffs_today += 1  # change field
-            user_inhaler.puffs_remaining -= 1
+        user_inhaler.puffs_today += 1  # change field
+        user_inhaler.puffs_remaining -= 1
+        user_inhaler.save()  # this will update only
 
-            user_inhaler.save()  # this will update only
-            return 1
-        return None
 class Inhalers(models.Model):
     inhaler_type = [
         ('Beclametasone_dipropionate', 'Beclametasone_dipropionate'),
@@ -228,7 +238,6 @@ class Inhalers(models.Model):
         ('9', '9'),
         ('10','10'),
     )
-
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='inhaler_user', null=False)
     inhaler_type = models.CharField(max_length=200, choices=inhaler_type)
@@ -276,16 +285,9 @@ class PollutionLevels(models.Model):
         #  pollution levels to true
         pass
 
-class Boroughs(models.Model):
-    OutwardName = models.CharField(max_length=128)
-    ApiName = models.CharField(max_length=128)
-
-class Meta:
-    verbose_name = 'Boroughs'
-    verbose_name_plural = 'Boroughs'
-    ordering = ['ApiName']
-
-def __str__(self):
-    return self.OutwardName
-
-
+OutwardName = models.CharField(max_length=128)
+ApiName = models.CharField(max_length=128)
+#
+# def updateTables(borough,self):
+#     updatepollution levels(location_lowercase)
+#     # pollution levels all rows where flag is true check the pollution level info advice for all those rows
