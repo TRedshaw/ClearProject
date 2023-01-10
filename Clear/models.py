@@ -143,6 +143,21 @@ class Inhaler(models.Model):
 
 
 class UserInhaler(models.Model):
+    # Adding inhaler type to the inhaler page so user can know which inhaler they are tracking
+    inhaler_type = [
+        ('Beclametasone_dipropionate', 'Beclametasone dipropionate'),
+        ('Ciclesonide', 'Ciclesonide'),
+        ('Fluticasone_poprionate', 'Fluticasone poprionate'),
+        ('Beclometasone', 'Beclometasone'),
+        ('Budesonide', 'Budesonide'),
+        ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
+        ('Mometasone', 'Mometasone'),
+        ('Beclometasone_dipropionate_with_ormoterol', 'Beclometasone_dipropionate_with_ormoterol'),
+        ('Budesonid_with_formoterol', 'Budesonid_with_formoterol'),
+        ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
+        ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
+        ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
+    ]
     # models.PROTECT works so if a user tries to delete an 'Inhaler' record (the one in quotations) then it wont let you
     # models.CASCADE will delete all related UserInhalers if a UserProfile (user) is deleted
 
@@ -184,7 +199,7 @@ class UserInhaler(models.Model):
         user_inhaler.save()  # this will update only
 
 class Inhalers(models.Model):
-    inhaler_type = (
+    inhaler_type = [
         ('Beclametasone_dipropionate', 'Beclametasone_dipropionate'),
         ('Ciclesonide', 'Ciclesonide'),
         ('Fluticasone_poprionate', 'Fluticasone_poprionate'),
@@ -197,7 +212,7 @@ class Inhalers(models.Model):
         ('Fluticasone_poprionate_with_formoterol', 'Fluticasone_poprionate_with_formoterol'),
         ('Fluticasone_poprionate_with_salmeterol', 'Fluticasone_poprionate_with_salmeterol'),
         ('Fluticasone_furoate_with_vilanterol', 'Fluticasone_furoate_with_vilanterol'),
-    )
+    ]
 
     remaing_puff_choice = (
         ('10', '10'),
@@ -270,7 +285,8 @@ class PollutionLevels(models.Model):
         #  pollution levels to true
         pass
 
-
+OutwardName = models.CharField(max_length=128)
+ApiName = models.CharField(max_length=128)
 #
 # def updateTables(borough,self):
 #     updatepollution levels(location_lowercase)
